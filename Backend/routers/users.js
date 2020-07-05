@@ -18,21 +18,36 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
     // {name, email, password, password2} = req.body ;
-    
-    const email = req.body.email
-    const checkUser = await User.findOne({email})
+    try {
+        const email = req.body.email
+        const checkUser = await User.findOne({email})
 
-    if (checkUser)
-        throw new Error('An User Already Exists !!')
-    
-    const user = new User(req.body)
-    
-    if (user.password != user.password2)
-        throw new Error('Passwords Should be same !!')
-    
-    await user.save(); 
+        if (checkUser){
+            res.send('An User Already Exists')
+            throw new Error('An User Already Exists !!')
+        }
+        const user = new User(req.body)
+        
+        if (user.password != user.password2){
+            res.send('Password Must be Same ')
+            throw new Error('Passwords Should be same !!')
+        }
 
-    res.send(user);
+        bcrypt.genSalt(10, (error, salt) => {
+            bcrypt.hash(user.password, salt, async (error, hash) => {
+                if (error)
+                    throw new Error(error)
+                user.password = hash 
+                user.password2 = hash 
+                await user.save();
+                res.send(user); 
+            })
+        })
+
+    } catch (error) {
+        res.send(error).status(404)
+    }
+    
 })
 
 module.exports = router ;
