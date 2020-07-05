@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs')
 
 const User = require('../models/User')
 const passport = require('passport')
+var flash = require('connect-flash');
+
 
 module.exports = function (passport){
     passport.use(
@@ -32,7 +34,7 @@ module.exports = function (passport){
                 })
 
             }catch(error){
-                res.send('Error Has Been Encountered ' + error);
+                console.log('Error Has Been Encountered ' + error);
             }
 
         })

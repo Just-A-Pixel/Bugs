@@ -6,14 +6,18 @@ const User = require('../models/User')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
+flash = require('connect-flash');
+require('../config/passport')(passport)
+
 
 // Login 
-router.get('/login', (req, res) => {
-    res.send('Login');
-})
+// router.get('/login', (req, res) => {
+//     res.send('Login');
+// })
 
 // Register 
 router.get('/register', (req, res) => {
+    res.send('Register')
 })
 
 // Register
@@ -52,8 +56,12 @@ router.post('/register', async (req, res) => {
 })
 
 // Login 
-router.post('/login ', (req, res) => {
-
-})
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+      failureMessage: 'What Have You Done ??',
+      successMessage: 'Thats What Heros Do !!',
+      failureFlash: true
+    })(req, res, next);
+  })
 
 module.exports = router ;
