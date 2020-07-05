@@ -55,11 +55,16 @@ router.post('/register', async (req, res) => {
     
 })
 
+
+router.get('/dashboard', (req, res) => {
+    res.send('User Auth Granted')
+})
+
 // Login 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
       failureMessage: 'What Have You Done ??',
-      successMessage: 'Thats What Heros Do !!',
+      successRedirect: '/users/dashboard',
       failureFlash: true
     })(req, res, next);
   })
