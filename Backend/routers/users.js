@@ -10,7 +10,13 @@ router.get('/login', (req, res) => {
 
 // Register 
 router.get('/register', (req, res) => {
-    res.send('Register')
+})
+
+router.post('/register', (req, res) => {
+    const {name, email, password, password2} = req.body ;
+    
+    if (password != password2)
+        
 })
 
 module.exports = router ;
