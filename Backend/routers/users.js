@@ -5,7 +5,7 @@ const router = express.Router();
 const User = require('../models/User')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
-
+const passport = require('passport')
 
 // Login 
 router.get('/login', (req, res) => {
@@ -16,6 +16,7 @@ router.get('/login', (req, res) => {
 router.get('/register', (req, res) => {
 })
 
+// Register
 router.post('/register', async (req, res) => {
     // {name, email, password, password2} = req.body ;
     try {
@@ -48,6 +49,11 @@ router.post('/register', async (req, res) => {
         res.send(error).status(404)
     }
     
+})
+
+// Login 
+router.post('/login ', (req, res) => {
+
 })
 
 module.exports = router ;
