@@ -4,6 +4,8 @@ const passport = require('passport')
 var flash = require('connect-flash');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+require('dotenv').config();
+
 
 
 require('./database/mongoose')
@@ -17,11 +19,11 @@ app.use(flash());
 
 app.use(
     session({
-      secret: 'secret',
+      secret: process.env.SECRET,
       resave: true,
       saveUninitialized: true,
       store: new MongoStore({
-        url: 'mongodb://localhost:27017/bugs-Auth',
+        url: process.env.MONGOURI,
         collection: 'sessions'
       })
     }) 
