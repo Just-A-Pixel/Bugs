@@ -6,14 +6,12 @@ const User = require('../models/User')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
+const {ensureAuthenticated} = require('../config/auth')
+
 flash = require('connect-flash');
 require('../config/passport')(passport)
 
 
-// Login 
-// router.get('/login', (req, res) => {
-//     res.send('Login');
-// })
 
 // Register 
 router.get('/register', (req, res) => {
@@ -55,9 +53,9 @@ router.post('/register', async (req, res) => {
     
 })
 
-
+// For login Transfer 
 router.get('/dashboard', (req, res) => {
-    res.send('User Auth Granted')
+    res.send('User Auth Granted' + req.isAuthenticated() )
 })
 
 // Login 
@@ -68,5 +66,11 @@ router.post('/login', (req, res, next) => {
       failureFlash: true
     })(req, res, next);
   })
+
+// Logout 
+router.get('/logout', ensureAuthenticated, (req, res) => {
+    req.logout();
+    res.send('You have been Successfully Been Logged Out')
+})
 
 module.exports = router ;
