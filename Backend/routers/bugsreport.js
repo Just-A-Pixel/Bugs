@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router();
 const Bugs = require('../models/BugsModel');
-const { report } = require('./users');
 
 router.get('/bug/:id', async(req, res) => { 
     var project = req.params.id ;
@@ -78,7 +77,6 @@ router.patch('/updatebug/:id', async (req, res) => {
                     t = i ;
                 }
             }
-
             bug.alpha[t] = ans[t];
             await bug.save() 
             res.send(bug.alpha[t])        
@@ -88,6 +86,10 @@ router.patch('/updatebug/:id', async (req, res) => {
     }catch (e){
         console.log(e)
     }
+})
+
+router.delete('/deletebug/:id', async(req, res) => {
+
 })
 
 module.exports = router
