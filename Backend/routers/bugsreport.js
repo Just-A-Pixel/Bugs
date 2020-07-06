@@ -1,26 +1,40 @@
 const express = require('express')
 const router = express.Router();
-const bugs = require('../models/BugsModel');
-const BugsModel = require('../models/BugsModel');
+const Bugs = require('../models/BugsModel');
 
 router.post('/reportbug', async (req, res) => {
     console.log(req.body)
-    var title = req.body.title
-    
     var project = req.body.project
+    var title = req.body.title
     var description = req.body.description
-    
-    var template = {title, description}
+    var issuedby = req.body.issuedby
+    var template = {
+        title,
+        description,
+        issuedby
+    }
+    try {
+        const bug = await Bugs.findOne({
+            project
+        })
 
-    const bugs = new BugsModel({
-        project,
-    })
-    bugs.alpha.push(template)
-    
-    
-
-    console.log(bugs)
-    res.send(bugs)
+        if (!bug) {
+            const bugs = new Bugs({
+                project,
+            })
+            bugs.alpha.push(template)
+            await bugs.save();
+            res.send(bugs)
+        } else {
+            bug.alpha.push(template)
+            await bug.save();
+            res.send(bug)
+        }
+    } catch (e) {
+        console.log(e)
+    }
 })
 
-module.exports = router 
+
+
+module.exports = router

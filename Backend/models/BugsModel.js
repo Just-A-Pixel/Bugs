@@ -13,6 +13,10 @@ const bugsSchema = new mongoose.Schema({
         description: {
             type: String,
             required: false
+        },
+        issuedby: {
+            type: String,
+            required: false 
         }
     }]
 })
