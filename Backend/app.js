@@ -47,7 +47,7 @@ app.use(function(req, res, next) {
     next();
   });  
 
-app.use('/', require('./routers/auth'))
+app.use('/report', require('./routers/bugsreport'))
 app.use('/users', require('./routers/users'))
 app.use(require('./routers/auth'))
 
