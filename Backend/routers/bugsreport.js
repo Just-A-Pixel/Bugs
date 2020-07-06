@@ -84,12 +84,28 @@ router.patch('/updatebug/:id', async (req, res) => {
             res.send("Not Found")
         }
     }catch (e){
+        res.send(e)
         console.log(e)
     }
 })
 
 router.delete('/deletebug/:id', async(req, res) => {
-
+    var id = req.params.id 
+    try {
+        const bug = await Bugs.findOne({ "alpha._id": id})
+        if (bug){
+            const ans = await bug.alpha
+            var filtered = ans.filter(function(value, index, arr){ return (value._id != id)})
+            
+            res.send(filtered) 
+            console.log(filtered)
+        }else {
+            res.send("Not Found")
+        }  
+    }catch (err){
+        console.log(err)
+        res.send(err)
+    }
 })
 
 module.exports = router
