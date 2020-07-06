@@ -57,19 +57,36 @@ router.post('/reportbug', async (req, res) => {
     }
 })
 
-router.patch('/updatebug/', async (req, res) => {
+router.patch('/updatebug/:id', async (req, res) => {
+    
+    var id = req.params.id 
+    
     try {
-        const bug = await Bugs.findOne({ "alpha._id": "5f0380f9ad1056a578e91b0f"})
-
+        const bug = await Bugs.findOne({ "alpha._id": id})
+        const {title, description} = req.body
         if (bug){
-            res.send(bug)
             // console.log(bug.alpha[0]._id)
+            const ans = await bug.alpha
+            var t = 0 ;
 
+            for(var i = 0 ; i < ans.length ; i++ ){
+                if (ans[i]._id == id){
+                    if (title)
+                        ans[i].title = title 
+                    if (description)
+                        ans[i].description = description
+                    t = i ;
+                }
+            }
+
+            bug.alpha[t] = ans[t];
+            await bug.save() 
+            res.send(bug.alpha[t])        
         }else {
             res.send("Not Found")
         }
     }catch (e){
-        res.send(e).status(404)
+        console.log(e)
     }
 })
 
