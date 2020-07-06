@@ -96,8 +96,9 @@ router.delete('/deletebug/:id', async(req, res) => {
         if (bug){
             const ans = await bug.alpha
             var filtered = ans.filter(function(value, index, arr){ return (value._id != id)})
-            
-            res.send(filtered) 
+            bug.alpha = filtered 
+            await bug.save()
+            res.send(bug.alpha) 
             console.log(filtered)
         }else {
             res.send("Not Found")
