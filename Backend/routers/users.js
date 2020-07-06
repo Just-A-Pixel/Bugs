@@ -55,13 +55,18 @@ router.post('/register', async (req, res) => {
 
 // For login Transfer 
 router.get('/dashboard', (req, res) => {
-    res.send('User Auth Granted' + req.isAuthenticated() )
+    res.send('User Auth Granted Status : ' + req.isAuthenticated() )
+})
+
+// For Failure Login Transfer
+router.get('/failed', (req, res) => {
+    res.send('Sorry , Please Try Again ')
 })
 
 // Login 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-      failureMessage: 'What Have You Done ??',
+      failureRedirect: '/users/failed',
       successRedirect: '/users/dashboard',
       failureFlash: true
     })(req, res, next);
