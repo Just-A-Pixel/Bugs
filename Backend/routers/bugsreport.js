@@ -57,4 +57,20 @@ router.post('/reportbug', async (req, res) => {
     }
 })
 
+router.patch('/updatebug/', async (req, res) => {
+    try {
+        const bug = await Bugs.findOne({ "alpha._id": "5f0380f9ad1056a578e91b0f"})
+
+        if (bug){
+            res.send(bug)
+            // console.log(bug.alpha[0]._id)
+
+        }else {
+            res.send("Not Found")
+        }
+    }catch (e){
+        res.send(e).status(404)
+    }
+})
+
 module.exports = router
