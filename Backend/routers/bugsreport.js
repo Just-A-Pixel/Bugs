@@ -1,6 +1,28 @@
 const express = require('express')
 const router = express.Router();
 const Bugs = require('../models/BugsModel');
+const { report } = require('./users');
+
+router.get('/bug/:id', async(req, res) => { 
+    var project = req.params.id ;
+    
+    if (project == 'all'){
+        const report = await Bugs.find({})
+        res.send(report)
+    }
+    try {
+        const report = await Bugs.findOne({
+            project
+        })
+        if (report){
+            console.log(report)
+            res.send(report)
+        }
+    } catch(e){
+        console.log(e);
+    }
+})
+
 
 router.post('/reportbug', async (req, res) => {
     console.log(req.body)
@@ -34,7 +56,5 @@ router.post('/reportbug', async (req, res) => {
         console.log(e)
     }
 })
-
-
 
 module.exports = router
