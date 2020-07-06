@@ -11,3 +11,4 @@ mongoose.connect('mongodb://localhost:27017/bugs-Auth', {
 }).catch( (err) => {
     console.log(err)
 }) 
+mongoose.Promise = global.Promise;

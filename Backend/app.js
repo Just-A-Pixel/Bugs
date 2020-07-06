@@ -5,7 +5,7 @@ var flash = require('connect-flash');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 require('dotenv').config();
-
+require('./config/passport-google')
 
 
 require('./database/mongoose')
@@ -47,6 +47,18 @@ app.use(passport.session());
 
 app.use('/', require('./routers/index'))
 app.use('/users', require('./routers/users'))
+
+app.get('/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: 'users/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    console.log('Redirect Successful')
+    res.redirect('users/dashboard');
+  });
+
 
 
 
