@@ -3,6 +3,6 @@ module.exports = {
         if (req.isAuthenticated()){
             return next();
         }
-        res.send('Please Login'+req.isAuthenticated());
+        res.send('Please Login , Status : '+req.isAuthenticated());
     }
 }

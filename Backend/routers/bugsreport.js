@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router();
 const Bugs = require('../models/BugsModel');
+const {ensureAuthenticated} = require('../config/auth')
 
-router.get('/bug/:id', async(req, res) => { 
+
+router.get('/bug/:id', ensureAuthenticated,async(req, res) => { 
     var project = req.params.id ;
     
     if (project == 'all'){
@@ -23,7 +25,7 @@ router.get('/bug/:id', async(req, res) => {
 })
 
 
-router.post('/reportbug', async (req, res) => {
+router.post('/reportbug', ensureAuthenticated,async (req, res) => {
     console.log(req.body)
     var project = req.body.project
     var title = req.body.title
@@ -56,7 +58,7 @@ router.post('/reportbug', async (req, res) => {
     }
 })
 
-router.patch('/updatebug/:id', async (req, res) => {
+router.patch('/updatebug/:id', ensureAuthenticated,async (req, res) => {
     
     var id = req.params.id 
     
@@ -89,7 +91,7 @@ router.patch('/updatebug/:id', async (req, res) => {
     }
 })
 
-router.delete('/deletebug/:id', async(req, res) => {
+router.delete('/deletebug/:id', ensureAuthenticated,async(req, res) => {
     var id = req.params.id 
     try {
         const bug = await Bugs.findOne({ "alpha._id": id})

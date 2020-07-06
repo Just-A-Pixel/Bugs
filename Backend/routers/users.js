@@ -12,7 +12,6 @@ flash = require('connect-flash');
 require('../config/passport')(passport)
 
 
-
 // Register 
 router.get('/register', (req, res) => {
     res.send('Register')
