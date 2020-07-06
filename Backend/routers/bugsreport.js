@@ -17,7 +17,7 @@ router.post('/reportbug', async (req, res) => {
     })
     bugs.alpha.push(template)
     
-    await bugs.save();
+    
 
     console.log(bugs)
     res.send(bugs)
