@@ -5,13 +5,13 @@ var flash = require('connect-flash');
 var session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 require('dotenv').config();
-require('./config/passport-google')
 
 
 require('./database/mongoose')
 require('./config/passport')(passport)
 const app = express()
 
+require('./config/passport-google')
 
 const PORT = process.env.PORT || 3000 
 
