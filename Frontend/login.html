@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/css/login.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <!-- Navigation -->
+
+    <nav class="navbar  navbar-expand navbar-dark">
+        <a href="" class="navbar-brand">CodechefVIT</a>         
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="btn signup" href="#">Contact Us</a>
+                <hr class="navline">
+            </li>
+            <li class="nav-item" style="margin-right: 50px;"><a class="btn signup" href="#">Sign up</a>
+                <hr class="navline">
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Login -->
+
+    <h1 class="text-center heading">Login</h1>
+    <hr class="underline">
+    <h6 class="text-center sub-heading">Every bug is important, no matter how small.</h6>
+    <div class="container d-flex justify-content-center login">
+        <form action="/" method="post">
+            <input type="text" id="username" name="username" placeholder="Username"><br><br>
+            <input type="password" id="pass" name="pass" placeholder="Password"><br><br>
+            <input type="submit" class="btn btn-dark submit" value="Login">
+        </form>
+    </div>
+
+    <!-- Login with google -->
+
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-outline-dark google-btn" href="/users/googleauth" role="button">
+            <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+            Login
+        </a>
+    </div>
+
+
+</body>
+
+</html>

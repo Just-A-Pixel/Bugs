@@ -1,0 +1,110 @@
+body {
+  background-color: #ffffff;
+  background-image: url("img/login\ background.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: top right;
+  background-size: cover;
+}
+
+hr.underline {
+    width: 140px;
+    position: relative;
+    bottom: 8px;
+    background-image: linear-gradient(90deg,rgb(228, 101, 233), rgb(116, 184, 240));
+    border: none;
+    height: 5px;
+    border-radius: 50px;
+}
+
+hr.navline {
+    width: 0px;
+    position: relative;
+    bottom: 20px;
+    right: 3px;
+    background-color: rgb(201, 71, 149);
+    border: none;
+    height: 2px;
+    border-radius: 50px;
+    transition: 300ms;
+}
+
+.signup {
+    background-color: none;
+    color: rgb(216, 216, 216);
+    font-size: 20px;
+    border-style: none;
+    padding: 10px 15px;
+    margin-right: 10px;
+    transition: 300ms;
+}
+
+.signup:hover {
+    font-size: 20px;
+    color: rgb(201, 71, 149);
+    transition: 300ms;
+}
+
+.signup:hover+hr.navline {
+    width: 80px;
+    transition: 300ms;
+}
+
+.heading {
+    margin-top: 150px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.sub-heading {
+    color: rgb(158, 158, 158);
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.login {
+    background-color: none;
+    padding: 30px;
+    width: 300px;
+}
+
+.submit {
+    margin-left: 8px;
+    width: 165px;
+}
+
+input {
+    border-style: solid;
+    border-width: 2px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+.google-btn {
+    text-transform:none;
+    border: none;
+    transition: 200ms;
+}
+
+.google-btn>img {
+    transition: 200ms;
+}
+
+.google-btn:hover {
+    background: none;
+    color: rgb(78, 78, 78);
+    font-size: 21px;
+    transition: 200ms;
+    
+}
+
+.google-btn:hover>img {
+    width: 30px;
+    transition: 200ms;
+}
+
