@@ -7,13 +7,15 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
 const {ensureAuthenticated} = require('../config/auth')
+const { forwardAuthenticated } = require('../config/auth');
+
 
 flash = require('connect-flash');
 require('../config/passport')(passport)
 
 
 // Register 
-router.get('/register', (req, res) => {
+router.get('/register',forwardAuthenticated, (req, res) => {
     res.send('Register')
 })
 
@@ -46,15 +48,17 @@ router.post('/register', async (req, res) => {
             })
         })
 
-    } catch (error) {
-        res.send(error).status(404)
+    } catch (err) {
+        console.log(err)
+        res.send(err).status(404) 
     }
     
 })
 
 // For login Transfer 
-router.get('/dashboard', (req, res) => {
-    res.send('User Auth Granted Status : ' + req.isAuthenticated() )
+router.get('/dashboard', async (req, res) => {     
+    console.log('I am Successful redirect ')
+    res.send('User Auth Granted Status : ' + req.isAuthenticated() + ' I am an Successful redirect ')
 })
 
 // For Failure Login Transfer
@@ -62,19 +66,27 @@ router.get('/failed', (req, res) => {
     res.send('Sorry , Please Try Again ')
 })
 
-// Login 
+// Login  
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-      failureRedirect: '/users/failed',
       successRedirect: '/users/dashboard',
+      failureRedirect: '/users/failed', 
       failureFlash: true
     })(req, res, next);
   })
 
 // Logout 
-router.get('/logout', ensureAuthenticated, (req, res) => {
+router.get('/logout' , (req, res) => {
     req.logout();
     res.send('You have been Successfully Been Logged Out')
 })
+
+
+  
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+      done(err, user);
+    });
+});  
 
 module.exports = router ;
