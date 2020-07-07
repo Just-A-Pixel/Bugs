@@ -56,10 +56,10 @@ router.post('/register', async (req, res) => {
 })
 
 // For login Transfer 
-router.get('/dashboard', async (req, res) => {     
+router.get('/dashboard', ensureAuthenticated,async (req, res) => {     
     console.log('I am Successful redirect ')
     res.send('User Auth Granted Status : ' + req.isAuthenticated() + ' I am an Successful redirect ')
-})
+}) 
 
 // For Failure Login Transfer
 router.get('/failed', (req, res) => {
