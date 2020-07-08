@@ -11,7 +11,8 @@ router.get('/auth/google',
 router.get('/auth/google/redirect', passport.authenticate('google'),(req, res, next) => {
     user = req.user
     console.log("Authenticated : ",req.isAuthenticated())
-    res.redirect('/users/dashboard')
+    res.send(user)
+    //res.redirect('/users/dashboard')
 });
 
 

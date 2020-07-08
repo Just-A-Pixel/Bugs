@@ -5,6 +5,7 @@ var flash = require('connect-flash');
 var session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 require('dotenv').config();
+require('./config/passport-google')
 
 
 require('./database/mongoose')
@@ -42,11 +43,12 @@ app.use(function(req, res, next) {
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
     next();
-  });  
+  });   
 
 app.use('/report', require('./routers/bugsreport'))
 app.use('/users', require('./routers/users'))
 app.use(require('./routers/auth'))
+
 
 
 

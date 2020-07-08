@@ -10,10 +10,6 @@ const {ensureAuthenticated} = require('../config/auth')
 const { forwardAuthenticated } = require('../config/auth');
 
 
-flash = require('connect-flash');
-require('../config/passport')(passport)
-
-
 // Register 
 router.get('/register',forwardAuthenticated, (req, res) => {
     res.send('Register')
@@ -56,7 +52,7 @@ router.post('/register', async (req, res) => {
 })
 
 // For login Transfer 
-router.get('/dashboard', ensureAuthenticated,async (req, res) => {     
+router.get('/dashboard', async (req, res) => {     
     console.log('I am Successful redirect ')
     res.send('User Auth Granted Status : ' + req.isAuthenticated() + ' I am an Successful redirect ')
 }) 
@@ -83,10 +79,4 @@ router.get('/logout' , (req, res) => {
 
 
   
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
-});  
-
 module.exports = router ;

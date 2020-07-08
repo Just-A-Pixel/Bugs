@@ -1,12 +1,12 @@
 const passport = require('passport');
 const mongoose = require('mongoose')
+const flash = require('connect-flash')
 const User = require('../models/User-Google');
 require('dotenv').config();
 
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
-
-
+ 
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
