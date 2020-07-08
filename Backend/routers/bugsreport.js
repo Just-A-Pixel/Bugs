@@ -114,6 +114,7 @@ router.delete('/deletebug/:id' ,async(req, res) => {
 router.patch('/postcomment/:id', async (req, res) => {
     var id = req.params.id  
     const {comments} = req.body 
+    console.log(req.user)
     try {
         
         const update = await Bugs.findOne({"alpha._id": id })
