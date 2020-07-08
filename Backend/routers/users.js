@@ -4,9 +4,9 @@ const express = require('express')
 const router = express.Router();
 const User = require('../models/User')
 const validator = require('validator')
+const Codechef = require('../models/Codechef-Members')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
-const {ensureAuthenticated} = require('../config/auth')
 const { forwardAuthenticated } = require('../config/auth');
 
 
@@ -77,6 +77,12 @@ router.get('/logout' , (req, res) => {
     res.send('You have been Successfully Been Logged Out')
 })
 
-
+// Codechef Member 
+router.post('/codechef', async (req, res) => {
+    console.log(req.body)
+    const codechef = new Codechef(req.body)
+    await codechef.save()
+    res.send(req.body)
+})
   
 module.exports = router ;
