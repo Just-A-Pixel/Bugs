@@ -111,10 +111,14 @@ router.delete('/deletebug/:id' ,async(req, res) => {
     }
 })
 
-router.get('/postcomment/', async (req, res) => {
+router.patch('/postcomment/', async (req, res) => {
+    var id = "5f037a7975949836f0d5e116" 
+    console.log(req.body)
     try {
-        console.log(req.user)
-        res.send(req.user)
+        
+        const update = await Bugs.updateOne({"alpha._id": "5f037a7975949836f0d5e116"}, {$set: {answer: req.body.comments}})
+        res.send(update)
+ 
     }catch (err){
         console.log(err)
         res.send(err)
