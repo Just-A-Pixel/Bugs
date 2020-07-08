@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const Bugs = require('../models/BugsModel');
+const User = require('../models/User-Google')
 const {ensureAuthenticated} = require('../config/auth')
 
 
@@ -113,28 +114,38 @@ router.delete('/deletebug/:id' ,async(req, res) => {
 
 router.patch('/postcomment/:id', async (req, res) => {
     var id = req.params.id  
-    const {comments} = req.body 
-    console.log(req.user)
-    try {
+    const {comments} = req.body
+    
+    // Temp Setup --> Start 
+    const user = await User.findOne({_id: "5f060580c1fb6fdf92dbb353"})
+    req.user = user  
+    // Temp Setup --> End 
+    
+    console.log(req.user.isCodechef) 
+    if (req.user.isCodechef){
+        try {
         
-        const update = await Bugs.findOne({"alpha._id": id })
-        
-        const ans = await update.alpha
-        var t = 0 ;
-
-        for(var i = 0 ; i < ans.length ; i++ ){
-            if (ans[i]._id == id){
-                ans[i].answer = comments
-                ans[i].issueSorted = true 
-                t = i ;
+            const update = await Bugs.findOne({"alpha._id": id })
+            
+            const ans = await update.alpha
+            var t = 0 ;
+    
+            for(var i = 0 ; i < ans.length ; i++ ){
+                if (ans[i]._id == id){
+                    ans[i].answer = comments
+                    ans[i].issueSorted = true 
+                    t = i ;
+                }
             }
+            update.alpha[t] = ans[t];
+            await update.save() 
+            res.send(update.alpha[t]) 
+        }catch (err){
+            console.log(err)
+            res.send(err)
         }
-        update.alpha[t] = ans[t];
-        await update.save() 
-        res.send(update.alpha[t]) 
-    }catch (err){
-        console.log(err)
-        res.send(err)
+    } else {
+        res.send("Not Authorized")
     }
 })
 
