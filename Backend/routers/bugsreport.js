@@ -21,11 +21,14 @@ router.get('/issueid/:id', async (req, res) => {
     var id = req.params.id 
     const bugs = await Bugs.find({_id: id})
     issues = []
-    bugs.forEach((bug) => {
-        console.log(bug)
-    })
+    bugs.forEach((bug) => { 
+        console.log(bug.alpha)
+        bug.alpha.forEach((scrap) => {
+            issues.push(scrap._id)
+        })
+    }) 
     res.send(issues)
-})
+}) 
 
 router.get('/bug/:id', async(req, res) => { 
     var project = req.params.id ;
