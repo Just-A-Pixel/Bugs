@@ -8,7 +8,7 @@ const Codechef = require('../models/Codechef-Members')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
 const { forwardAuthenticated } = require('../config/auth');
-
+require('../config/passport')
 
 // Register 
 router.get('/register', (req, res) => {
@@ -54,7 +54,8 @@ router.post('/register', async (req, res) => {
 // For login Transfer 
 router.get('/dashboard', async (req, res) => {     
     console.log('I am Successful redirect ')
-    res.send('User Auth Granted Status : ' + req.isAuthenticated() + ' I am an Successful redirect ')
+    
+    res.send('User Auth Granted Status : ' + req.isAuthenticated() + ' I am an Successful redirect ' )
 }) 
 
 // For Failure Login Transfer
@@ -69,7 +70,7 @@ router.post('/login', (req, res, next) => {
       failureRedirect: '/users/failed', 
       failureFlash: true
     })(req, res, next);
-  })
+})
 
 // Logout 
 router.get('/logout' , (req, res) => {

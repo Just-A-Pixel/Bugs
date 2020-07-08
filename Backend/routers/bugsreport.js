@@ -111,8 +111,14 @@ router.delete('/deletebug/:id' ,async(req, res) => {
     }
 })
 
-router.patch('/postcomment', (req, res) => {
-    
+router.get('/postcomment/', async (req, res) => {
+    try {
+        console.log(req.user)
+        res.send(req.user)
+    }catch (err){
+        console.log(err)
+        res.send(err)
+    }
 })
 
 module.exports = router

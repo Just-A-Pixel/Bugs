@@ -30,6 +30,7 @@ module.exports = function (passport){
                     return done (null, false, {message: 'Email is not Registered '})
                 
                 
+                
                 bcrypt.compare(password, user.password, (error, isMatch) => {
                     if (error){
                         res.send('Error : Password Doesn\'t Matches ')
