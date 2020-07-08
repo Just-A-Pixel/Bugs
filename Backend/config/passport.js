@@ -8,6 +8,17 @@ var flash = require('connect-flash');
 
 
 module.exports = function (passport){
+
+    passport.serializeUser(function(user, done) {
+        done(null, user.id);
+    });
+      
+    passport.deserializeUser(function(id, done) {
+        User.findById(id, function (err, user) {
+          done(err, user);
+        });
+    });
+
     passport.use(
         new LocalStrategy({ usernameField: 'email'}, async (email, password, done) => {
             
@@ -17,6 +28,7 @@ module.exports = function (passport){
                 
                 if (!user)
                     return done (null, false, {message: 'Email is not Registered '})
+                
                 
                 
                 bcrypt.compare(password, user.password, (error, isMatch) => {
@@ -39,15 +51,4 @@ module.exports = function (passport){
 
         })
     )
-
-    passport.serializeUser(function(user, done) {
-        done(null, user.id);
-    });
-      
-    passport.deserializeUser(function(id, done) {
-        User.findById(id, function (err, user) {
-          done(err, user);
-        });
-    });
-      
 }

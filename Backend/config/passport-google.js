@@ -1,10 +1,10 @@
 const passport = require('passport');
 const mongoose = require('mongoose')
+const flash = require('connect-flash')
 const User = require('../models/User-Google');
 require('dotenv').config();
 
-
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 
 passport.serializeUser((user, done) => {
@@ -20,8 +20,8 @@ passport.deserializeUser((id, done) => {
 
 passport.use(
     new GoogleStrategy({
-        clientID:  process.env.CLIENTID,
-        clientSecret:  process.env.CLIENTSECRET,
+        clientID: process.env.CLIENTID,
+        clientSecret: process.env.CLIENTSECRET,
         callbackURL: '/auth/google/redirect'
     }, (accessToken, refreshToken, profile, done) => {
         User.findOne({
@@ -35,7 +35,8 @@ passport.use(
                     _id: new mongoose.Types.ObjectId(),
                     googleId: profile.id,
                     name: profile.displayName,
-                    email: profile._json.email
+                    email: profile._json.email,
+                    isCodechef: false
                 }).save().then((newUser) => {
                     console.log('created new user: ', newUser);
                     done(null, newUser);

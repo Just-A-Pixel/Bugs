@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const passport = require('passport')
 var flash = require('connect-flash');
-const session = require('express-session');
+var session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 require('dotenv').config();
 require('./config/passport-google')
@@ -12,10 +12,13 @@ require('./database/mongoose')
 require('./config/passport')(passport)
 const app = express()
 
+require('./config/passport-google')
 
 const PORT = process.env.PORT || 3000 
 
-app.use(flash());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 
 app.use(
   session({
@@ -29,15 +32,10 @@ app.use(
   }) 
 );
 
-
-  
-
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(flash());  
 
 
 app.use(function(req, res, next) {
@@ -45,11 +43,12 @@ app.use(function(req, res, next) {
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
     next();
-  });  
+  });   
 
 app.use('/report', require('./routers/bugsreport'))
 app.use('/users', require('./routers/users'))
 app.use(require('./routers/auth'))
+
 
 
 
