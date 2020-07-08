@@ -15,12 +15,14 @@ router.get('/auth/google/redirect', passport.authenticate('google'), async (req,
     console.log("Authenticated : ",req.isAuthenticated())
     console.log(user)
     var email = user.email
-    const codechef = await Codechef.find({email})
+    const codechef = await Codechef.findOne({email})
     if (codechef){
       const update = await User.updateOne({googleId: user.googleId}, {$set: {isCodechef: true} })
       console.log(update)
-      res.send("User Identified as Codechef - Member ") 
-    } 
+      res.send(codechef) 
+    } else {
+      res.send("Not Found ")
+    }
  
 });    
 
