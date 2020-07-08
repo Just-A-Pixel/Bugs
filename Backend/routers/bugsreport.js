@@ -4,6 +4,15 @@ const Bugs = require('../models/BugsModel');
 const User = require('../models/User-Google')
 const {ensureAuthenticated} = require('../config/auth')
 
+router.get('/allprojects',async (req, res) => {
+    const bugs = await Bugs.find({})
+    console.log(bugs)  
+    project = [] 
+    bugs.forEach((bug) => {
+        project.push(bug.project)
+    })  
+    res.send(project) 
+})
 
 router.get('/bug/:id', async(req, res) => { 
     var project = req.params.id ;
