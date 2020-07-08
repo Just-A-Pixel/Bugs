@@ -21,7 +21,12 @@ const bugsSchema = new mongoose.Schema({
         answer: {
             type: String, 
             required: false
-        } 
+        },
+        issueSorted: {
+            type: Boolean,
+            default: false,
+            required: false 
+        }
     }]
 })
 

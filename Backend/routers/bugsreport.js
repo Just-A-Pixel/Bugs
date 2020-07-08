@@ -124,6 +124,7 @@ router.patch('/postcomment/:id', async (req, res) => {
         for(var i = 0 ; i < ans.length ; i++ ){
             if (ans[i]._id == id){
                 ans[i].answer = comments
+                ans[i].issueSorted = true 
                 t = i ;
             }
         }
