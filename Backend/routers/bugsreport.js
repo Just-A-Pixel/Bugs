@@ -16,9 +16,15 @@ router.get('/allprojects',async (req, res) => {
     res.send(project) 
 })
 
-// Get all Ids for a Specific Project, Will Help in Frontend for Updation using Ids 
-router.get('/issueid', async (req, res) => {
-    const bugs = await Bugs.find({})
+// Get all Bug Issue Ids for a Specific Project, Will Help in Frontend for Updation using Ids 
+router.get('/issueid/:id', async (req, res) => {
+    var id = req.params.id 
+    const bugs = await Bugs.find({_id: id})
+    issues = []
+    bugs.forEach((bug) => {
+        console.log(bug)
+    })
+    res.send(issues)
 })
 
 router.get('/bug/:id', async(req, res) => { 
