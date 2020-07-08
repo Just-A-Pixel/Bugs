@@ -12,7 +12,7 @@ const { forwardAuthenticated } = require('../config/auth');
 
 // Register 
 router.get('/register',forwardAuthenticated, (req, res) => {
-    res.send('Register')
+    res.send("Register") 
 })
 
 // Register

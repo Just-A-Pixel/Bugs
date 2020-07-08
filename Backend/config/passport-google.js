@@ -35,7 +35,8 @@ passport.use(
                     _id: new mongoose.Types.ObjectId(),
                     googleId: profile.id,
                     name: profile.displayName,
-                    email: profile._json.email
+                    email: profile._json.email,
+                    isCodechef: false 
                 }).save().then((newUser) => {
                     console.log('created new user: ', newUser);
                     done(null, newUser);
