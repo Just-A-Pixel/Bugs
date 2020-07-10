@@ -13,7 +13,7 @@ router.get('/allprojects',async (req, res) => {
     bugs.forEach((bug) => {
         project.push(bug.project)
     })  
-    res.send(project) 
+    res.json(project) 
 })
 
 // Get all Bug Issue Ids for a Specific Project, Will Help in Frontend for Updation using Ids 
@@ -27,7 +27,7 @@ router.get('/issueid/:id', async (req, res) => {
             issues.push(scrap._id)
         })
     }) 
-    res.send(issues)
+    res.json(issues)
 }) 
 
 router.get('/bug/:id', async(req, res) => { 
@@ -35,7 +35,7 @@ router.get('/bug/:id', async(req, res) => {
     
     if (project == 'all'){
         const report = await Bugs.find({})
-        res.send(report)
+        res.json(report)
     }
     try {
         const report = await Bugs.findOne({
@@ -43,11 +43,11 @@ router.get('/bug/:id', async(req, res) => {
         })
         if (report){
             console.log(report)
-            res.send(report)
+            res.json(report)
         }
     } catch(e){
         console.log(e);
-        res.send(e)
+        res.json(e)
     }
 })
 
@@ -74,11 +74,11 @@ router.post('/reportbug',async (req, res) => {
             })
             bugs.alpha.push(template)
             await bugs.save();
-            res.send(bugs)
+            res.json(bugs)
         } else {
             bug.alpha.push(template)
             await bug.save();
-            res.send(bug)
+            res.json(bug)
         }
     } catch (e) {
         console.log(e)
@@ -108,12 +108,12 @@ router.patch('/updatebug/:id',async (req, res) => {
             }
             bug.alpha[t] = ans[t];
             await bug.save() 
-            res.send(bug.alpha[t])        
+            res.json(bug.alpha[t])        
         }else {
-            res.send("Not Found")
+            res.json("Not Found")
         }
     }catch (e){
-        res.send(e)
+        res.json(e)
         console.log(e)
     }
 })
@@ -127,14 +127,14 @@ router.delete('/deletebug/:id' ,async(req, res) => {
             var filtered = ans.filter(function(value, index, arr){ return (value._id != id)})
             bug.alpha = filtered 
             await bug.save()
-            res.send(bug.alpha) 
+            res.json(bug.alpha) 
             console.log(filtered)
         }else {
-            res.send("Not Found")
+            res.json("Not Found")
         }  
     }catch (err){
         console.log(err)
-        res.send(err)
+        res.json(err)
     }
 })
 
@@ -165,13 +165,13 @@ router.patch('/postcomment/:id', async (req, res) => {
             }
             update.alpha[t] = ans[t];
             await update.save() 
-            res.send(update.alpha[t]) 
+            res.json(update.alpha[t]) 
         }catch (err){
             console.log(err)
-            res.send(err)
+            res.json(err)
         }
     } else {
-        res.send("Not Authorized")
+        res.json("Not Authorized")
     }
 })
 

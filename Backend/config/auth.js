@@ -3,7 +3,7 @@ module.exports = {
         if (req.isAuthenticated()){
             return next();
         }
-        res.send('Please Login , Status : ' + req.isAuthenticated());
+        res.json('Please Login , Status : ' + req.isAuthenticated());
     },
     forwardAuthenticated: function(req, res, next) {
         if (!req.isAuthenticated()) {
