@@ -143,7 +143,7 @@ router.patch('/postcomment/:id', async (req, res) => {
     const {comments} = req.body
     
     // Temp Setup --> Start 
-    const user = await User.findOne({_id: "5f060580c1fb6fdf92dbb353"})
+    const user = await User.findOne({_id: "5f08a2dde501f96c62a8b758"})
     req.user = user  
     // Temp Setup --> End 
     
