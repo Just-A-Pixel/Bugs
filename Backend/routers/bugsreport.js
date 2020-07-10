@@ -4,6 +4,8 @@ const Bugs = require('../models/BugsModel');
 const User = require('../models/User-Google')
 const {ensureAuthenticated} = require('../config/auth')
 
+
+// Getting All the Projects 
 router.get('/allprojects',async (req, res) => {
     const bugs = await Bugs.find({})
     console.log(bugs)  
@@ -13,6 +15,20 @@ router.get('/allprojects',async (req, res) => {
     })  
     res.send(project) 
 })
+
+// Get all Bug Issue Ids for a Specific Project, Will Help in Frontend for Updation using Ids 
+router.get('/issueid/:id', async (req, res) => {
+    var id = req.params.id 
+    const bugs = await Bugs.find({_id: id})
+    issues = []
+    bugs.forEach((bug) => { 
+        console.log(bug.alpha)
+        bug.alpha.forEach((scrap) => {
+            issues.push(scrap._id)
+        })
+    }) 
+    res.send(issues)
+}) 
 
 router.get('/bug/:id', async(req, res) => { 
     var project = req.params.id ;
