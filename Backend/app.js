@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const cors = require('cors')
 var flash = require('connect-flash');
 var session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -18,6 +19,7 @@ const PORT = process.env.PORT || 3000
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(cors())
 
 
 app.use(
