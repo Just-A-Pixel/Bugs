@@ -12,7 +12,7 @@ require('../config/passport')
 
 // Register 
 router.get('/register', (req, res) => {
-    res.send(req.user) 
+    res.json(req.user) 
 })
 
 // Register
@@ -23,13 +23,13 @@ router.post('/register', async (req, res) => {
         const checkUser = await User.findOne({email})
 
         if (checkUser){
-            res.send('An User Already Exists')
+            res.json('An User Already Exists')
             throw new Error('An User Already Exists !!')
         }
         const user = new User(req.body)
         
         if (user.password != user.password2){
-            res.send('Password Must be Same ')
+            res.json('Password Must be Same ')
             throw new Error('Passwords Should be same !!')
         }
 
@@ -40,13 +40,13 @@ router.post('/register', async (req, res) => {
                 user.password = hash 
                 user.password2 = hash 
                 await user.save();
-                res.send(user); 
+                res.json(user); 
             })
         })
 
     } catch (err) {
         console.log(err)
-        res.send(err).status(404) 
+        res.json(err).status(404) 
     }
     
 })
@@ -55,12 +55,12 @@ router.post('/register', async (req, res) => {
 router.get('/dashboard', async (req, res) => {     
     console.log('I am Successful redirect ')
     
-    res.send('User Auth Granted Status : ' + req.isAuthenticated() + ' I am an Successful redirect ' )
+    res.json('User Auth Granted Status : ' + req.isAuthenticated() + ' I am an Successful redirect ' )
 }) 
 
 // For Failure Login Transfer
 router.get('/failed', (req, res) => {
-    res.send('Sorry , Please Try Again ')
+    res.json('Sorry , Please Try Again ')
 })
 
 // Login  
@@ -75,7 +75,7 @@ router.post('/login', (req, res, next) => {
 // Logout 
 router.get('/logout' , (req, res) => {
     req.logout();
-    res.send('You have been Successfully Been Logged Out')
+    res.json('You have been Successfully Been Logged Out')
 })
 
 // Codechef Member 
@@ -83,7 +83,7 @@ router.post('/codechef', async (req, res) => {
     console.log(req.body)
     const codechef = new Codechef(req.body)
     await codechef.save()
-    res.send(req.body)
+    res.json(req.body)
 })
   
 module.exports = router ;
