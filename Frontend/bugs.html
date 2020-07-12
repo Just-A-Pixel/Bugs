@@ -47,16 +47,21 @@
 
         <div class="col-sm-8 main-area">
             <br>
-            <div class="btn add-bug">Report A Bug</div> <br><br>
-            <form>
-                <textarea rows="4" cols="50" id="bug"></textarea>
+            <div class="btn btn-light add-bug" onclick="showForm()">Report A Bug</div> <br><br>
+
+            <form id="report-bug" style="display: none;">
+                <!-- <textarea rows="4" cols="50" id="bug"></textarea> -->
+                <!-- <button class="btn btn-danger" onclick="hideReportBug(this)">X</button><br> -->
+                <select id="project" placeholder = "Project">
+                <option>Select Project</option>
+                </select>
+                <br>
+                <input type="text" id="title" placeholder = "Title"><br>
+                <input type="text" id="description" placeholder = "Description"><br>
+                <input type="text" id="issuedby" placeholder = "Your Name"><br>
                 <div class="btn btn-dark" onclick="submitBug()">submit</button></div>
             </form>
             <div id="issue-list"></div>
-            <!-- <div class="container tweet">
-                <button class="btn remove-tweet" onclick="removeBug(this)">X</button><br>
-                <p>dawdadawda</p>
-            </div> -->
             </div>
         </div>
     </div>
