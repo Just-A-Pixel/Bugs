@@ -2,8 +2,22 @@ const express = require('express')
 const router = express.Router();
 const Bugs = require('../models/BugsModel');
 const User = require('../models/User-Google')
+const {spawn} = require('child_process');
 const {ensureAuthenticated} = require('../config/auth')
 
+// Router For Posting The Project --> Specifically For CC Members
+router.post('/addprojectcodechef', async (req, res) => {
+    var project = req.body.project
+    const bugs = await Bugs.findOne({project})
+    console.log(bugs)
+    if (bugs){
+        res.json("The Project Already Exists !!! ")
+    } else {
+        const update = new Bugs({project})
+        await update.save()
+        res.json(update)
+    }
+})
 
 // Getting All the Projects 
 router.get('/allprojects',async (req, res) => {
