@@ -4,18 +4,15 @@ const express = require('express')
 const router = express.Router();
 const User = require('../models/User')
 const validator = require('validator')
+const Codechef = require('../models/Codechef-Members')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
-const {ensureAuthenticated} = require('../config/auth')
-
-flash = require('connect-flash');
-require('../config/passport')(passport)
-
-
+const { forwardAuthenticated } = require('../config/auth');
+require('../config/passport')
 
 // Register 
 router.get('/register', (req, res) => {
-    res.send('Register')
+    res.json(req.user) 
 })
 
 // Register
@@ -26,13 +23,13 @@ router.post('/register', async (req, res) => {
         const checkUser = await User.findOne({email})
 
         if (checkUser){
-            res.send('An User Already Exists')
+            res.json('An User Already Exists')
             throw new Error('An User Already Exists !!')
         }
         const user = new User(req.body)
         
         if (user.password != user.password2){
-            res.send('Password Must be Same ')
+            res.json('Password Must be Same ')
             throw new Error('Passwords Should be same !!')
         }
 
@@ -43,34 +40,50 @@ router.post('/register', async (req, res) => {
                 user.password = hash 
                 user.password2 = hash 
                 await user.save();
-                res.send(user); 
+                res.json(user); 
             })
         })
 
-    } catch (error) {
-        res.send(error).status(404)
+    } catch (err) {
+        console.log(err)
+        res.json(err).status(404) 
     }
     
 })
 
 // For login Transfer 
-router.get('/dashboard', (req, res) => {
-    res.send('User Auth Granted' + req.isAuthenticated() )
+router.get('/dashboard', async (req, res) => {     
+    console.log('I am Successful redirect ')
+    
+    res.json('User Auth Granted Status : ' + req.isAuthenticated() + ' I am an Successful redirect ' )
+}) 
+
+// For Failure Login Transfer
+router.get('/failed', (req, res) => {
+    res.json('Sorry , Please Try Again ')
 })
 
-// Login 
+// Login  
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
-      failureMessage: 'What Have You Done ??',
       successRedirect: '/users/dashboard',
+      failureRedirect: '/users/failed', 
       failureFlash: true
     })(req, res, next);
-  })
-
-// Logout 
-router.get('/logout', ensureAuthenticated, (req, res) => {
-    req.logout();
-    res.send('You have been Successfully Been Logged Out')
 })
 
+// Logout 
+router.get('/logout' , (req, res) => {
+    req.logout();
+    res.json('You have been Successfully Been Logged Out')
+})
+
+// Codechef Member 
+router.post('/codechef', async (req, res) => {
+    console.log(req.body)
+    const codechef = new Codechef(req.body)
+    await codechef.save()
+    res.json(req.body)
+})
+  
 module.exports = router ;

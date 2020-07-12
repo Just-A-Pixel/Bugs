@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config();
 
-mongoose.connect('mongodb://localhost:27017/bugs-Auth', {
+mongoose.connect(process.env.MONGOURI, {
     useNewUrlParser: true ,
     useCreateIndex: true ,
     useFindAndModify: false,

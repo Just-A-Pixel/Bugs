@@ -1,13 +1,41 @@
 const express = require('express')
 const router = express.Router();
 const Bugs = require('../models/BugsModel');
+const User = require('../models/User-Google')
+const {ensureAuthenticated} = require('../config/auth')
+
+
+// Getting All the Projects 
+router.get('/allprojects',async (req, res) => {
+    const bugs = await Bugs.find({})
+    console.log(bugs)  
+    project = [] 
+    bugs.forEach((bug) => {
+        project.push(bug.project)
+    })  
+    res.json(project) 
+})
+
+// Get all Bug Issue Ids for a Specific Project, Will Help in Frontend for Updation using Ids 
+router.get('/issueid/:id', async (req, res) => {
+    var id = req.params.id 
+    const bugs = await Bugs.find({_id: id})
+    issues = []
+    bugs.forEach((bug) => { 
+        console.log(bug.alpha)
+        bug.alpha.forEach((scrap) => {
+            issues.push(scrap._id)
+        })
+    }) 
+    res.json(issues)
+}) 
 
 router.get('/bug/:id', async(req, res) => { 
     var project = req.params.id ;
     
     if (project == 'all'){
         const report = await Bugs.find({})
-        res.send(report)
+        res.json(report)
     }
     try {
         const report = await Bugs.findOne({
@@ -15,15 +43,16 @@ router.get('/bug/:id', async(req, res) => {
         })
         if (report){
             console.log(report)
-            res.send(report)
+            res.json(report)
         }
     } catch(e){
         console.log(e);
+        res.json(e)
     }
 })
 
 
-router.post('/reportbug', async (req, res) => {
+router.post('/reportbug',async (req, res) => {
     console.log(req.body)
     var project = req.body.project
     var title = req.body.title
@@ -45,18 +74,18 @@ router.post('/reportbug', async (req, res) => {
             })
             bugs.alpha.push(template)
             await bugs.save();
-            res.send(bugs)
+            res.json(bugs)
         } else {
             bug.alpha.push(template)
             await bug.save();
-            res.send(bug)
+            res.json(bug)
         }
     } catch (e) {
         console.log(e)
     }
 })
 
-router.patch('/updatebug/:id', async (req, res) => {
+router.patch('/updatebug/:id',async (req, res) => {
     
     var id = req.params.id 
     
@@ -79,17 +108,17 @@ router.patch('/updatebug/:id', async (req, res) => {
             }
             bug.alpha[t] = ans[t];
             await bug.save() 
-            res.send(bug.alpha[t])        
+            res.json(bug.alpha[t])        
         }else {
-            res.send("Not Found")
+            res.json("Not Found")
         }
     }catch (e){
-        res.send(e)
+        res.json(e)
         console.log(e)
     }
 })
 
-router.delete('/deletebug/:id', async(req, res) => {
+router.delete('/deletebug/:id' ,async(req, res) => {
     var id = req.params.id 
     try {
         const bug = await Bugs.findOne({ "alpha._id": id})
@@ -98,14 +127,51 @@ router.delete('/deletebug/:id', async(req, res) => {
             var filtered = ans.filter(function(value, index, arr){ return (value._id != id)})
             bug.alpha = filtered 
             await bug.save()
-            res.send(bug.alpha) 
+            res.json(bug.alpha) 
             console.log(filtered)
         }else {
-            res.send("Not Found")
+            res.json("Not Found")
         }  
     }catch (err){
         console.log(err)
-        res.send(err)
+        res.json(err)
+    }
+})
+
+router.patch('/postcomment/:id', async (req, res) => {
+    var id = req.params.id  
+    const {comments} = req.body
+    
+    // Temp Setup --> Start 
+    const user = await User.findOne({_id: "5f08a2dde501f96c62a8b758"})
+    req.user = user  
+    // Temp Setup --> End 
+    
+    console.log(req.user.isCodechef) 
+    if (req.user.isCodechef){
+        try {
+        
+            const update = await Bugs.findOne({"alpha._id": id })
+            
+            const ans = await update.alpha
+            var t = 0 ;
+    
+            for(var i = 0 ; i < ans.length ; i++ ){
+                if (ans[i]._id == id){
+                    ans[i].answer = comments
+                    ans[i].issueSorted = true 
+                    t = i ;
+                }
+            }
+            update.alpha[t] = ans[t];
+            await update.save() 
+            res.json(update.alpha[t]) 
+        }catch (err){
+            console.log(err)
+            res.json(err)
+        }
+    } else {
+        res.json("Not Authorized")
     }
 })
 
