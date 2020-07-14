@@ -3,7 +3,9 @@ const router = express.Router();
 const Bugs = require('../models/BugsModel');
 const User = require('../models/User-Google')
 const {spawn} = require('child_process');
-const {ensureAuthenticated} = require('../config/auth')
+const {ensureAuthenticated} = require('../config/auth');
+const { json } = require('body-parser');
+const fetch = require('node-fetch');
 
 // Router For Posting The Project --> Specifically For CC Members
 router.post('/addprojectcodechef', async (req, res) => {
@@ -94,6 +96,30 @@ router.post('/reportbug',async (req, res) => {
             await bug.save();
             res.json(bug)
         }
+
+        var gitIssue = [];
+        var gitTemplate = {title, body: description}
+        gitIssue.push((gitTemplate))
+        JSON.stringify(gitIssue)
+        console.log(gitIssue)
+        
+        const user = 'CodeChefVIT';
+        var repo = project;
+        repo = repo.replace(/ /g, '-')
+        console.log(`https://api.github.com/repos/${user}/${repo}/issues`)
+        gitIssue.forEach(issue => {
+            fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
+                method: 'post',
+                body:    JSON.stringify(issue),
+                headers: {'Content-Type': 'application/json', 'Authorization': `token ${process.env.TOKEN}`}
+            })
+            .then(res =>  res.json())
+            .then(json => {
+                console.log(`Issue created at ${json.url}`)
+            })
+        })
+
+
     } catch (e) {
         console.log(e)
     }
