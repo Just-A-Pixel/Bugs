@@ -7,6 +7,16 @@ const {ensureAuthenticated} = require('../config/auth');
 const { json } = require('body-parser');
 const fetch = require('node-fetch');
 
+// Router For Posting The Labels for CC Projects --> Specifically For CC Members 
+router.post('/addlabels', async(req, res) => {
+
+})
+
+// Router For Outputting the Labels Available 
+router.get('/getlabels', async(req, res) => {
+
+})
+
 // Router For Posting The Project --> Specifically For CC Members
 router.post('/addprojectcodechef', async (req, res) => {
     var project = req.body.project
