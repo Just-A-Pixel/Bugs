@@ -74,10 +74,12 @@ router.post('/reportbug',async (req, res) => {
     var title = req.body.title
     var description = req.body.description
     var issuedby = req.body.issuedby
+    var gitLabels = req.body.labels
     var template = {
         title,
         description,
-        issuedby
+        issuedby,
+        gitLabels
     }
     try {
         const bug = await Bugs.findOne({
@@ -97,25 +99,25 @@ router.post('/reportbug',async (req, res) => {
             res.json(bug)
         }
 
-        var gitIssue = [];
-        var gitTemplate = {title, body: description}
-        gitIssue.push((gitTemplate))
-        JSON.stringify(gitIssue)
-        console.log(gitIssue)
+        // var gitIssue = [];
+        var gitTemplate = {title, body: description, labels: [gitLabels]}
+        // gitIssue.push((gitTemplate))
         
-        const user = 'CodeChefVIT';
-        var repo = project;
-        repo = repo.replace(/ /g, '-')
-        console.log(`https://api.github.com/repos/${user}/${repo}/issues`)
-        fetch (`https://api.github.com/repos/${user}/${repo}/issues`, {
-            method: 'post',
-            body: JSON.stringify(issue),
-            headers: {'Content-Type': 'application/json', 'Authorization': `token ${process.env.TOKEN}`}
-        })
-        .then( res => res.json())
-        .then(json => {
-            console.log(`Issue created at ${json.url}`)
-        })
+        console.log(JSON.stringify(gitTemplate))
+        
+        // const user = 'hardikkix';
+        // var repo = 'WinterSemCPrograms';
+        // repo = repo.replace(/ /g, '-')
+        // console.log(`https://api.github.com/repos/${user}/${repo}/issues`)
+        // fetch (`https://api.github.com/repos/${user}/${repo}/issues`, {
+        //     method: 'post',
+        //     body: JSON.stringify(issue),
+        //     headers: {'Content-Type': 'application/json', 'Authorization': `token ${process.env.TOKEN}`}
+        // })
+        // .then( res => res.json())
+        // .then(json => {
+        //     console.log(`Issue created at ${json.url}`)
+        // })
         // gitIssue.forEach(issue => {
         //     fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
         //         method: 'post',
