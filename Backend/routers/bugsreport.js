@@ -10,7 +10,14 @@ const fetch = require('node-fetch');
 
 // Router For Posting The Labels for CC Projects --> Specifically For CC Members 
 router.post('/addlabels', async(req, res) => {
-
+    var label = req.body.label 
+    const exist = await Label.findOne({label})
+    if (exist){
+        console.log(`An Label Already Exists `)
+        res.send('An Label Already Exists ')
+    } else {
+        
+    }
 })
 
 // Router For Outputting the Labels Available 

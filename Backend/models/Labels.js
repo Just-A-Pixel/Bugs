@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const labelsSchema = new mongoose.Schema({
-    labels: {
+    label: {
         type: String,
         required: false 
     }
