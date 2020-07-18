@@ -14,15 +14,18 @@ router.post('/addlabels', async(req, res) => {
     const exist = await Label.findOne({label})
     if (exist){
         console.log(`An Label Already Exists `)
-        res.send('An Label Already Exists ')
+        res.json('An Label Already Exists ')
     } else {
-        
+        const newLabel = new Label({label})
+        await newLabel.save()
+        res.json(newLabel)
     }
 })
 
 // Router For Outputting the Labels Available 
 router.get('/getlabels', async(req, res) => {
-
+    const labels = await Label.find({})
+    console.log(labels)
 })
 
 // Router For Posting The Project --> Specifically For CC Members
