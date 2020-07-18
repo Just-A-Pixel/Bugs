@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const Bugs = require('../models/BugsModel');
 const User = require('../models/User-Google')
+const Label = require('../models/Labels')
 const {spawn} = require('child_process');
 const {ensureAuthenticated} = require('../config/auth');
 const { json } = require('body-parser');
