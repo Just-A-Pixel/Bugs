@@ -46,6 +46,7 @@ router.get('/issueid/:id', async (req, res) => {
     res.json(issues)
 }) 
 
+// Finding Issues in Particular Project with Certain Ids 
 router.get('/bug/:id', async(req, res) => { 
     var project = req.params.id ;
     
@@ -67,7 +68,7 @@ router.get('/bug/:id', async(req, res) => {
     }
 })
 
-
+// Posting The Bugs 
 router.post('/reportbug',async (req, res) => {
     console.log(req.body)
     var project = req.body.project
@@ -126,6 +127,7 @@ router.post('/reportbug',async (req, res) => {
     }
 })
 
+// Updation of Bug by User
 router.patch('/updatebug/:id',async (req, res) => {
     
     var id = req.params.id 
@@ -159,6 +161,7 @@ router.patch('/updatebug/:id',async (req, res) => {
     }
 })
 
+// Deletion By User 
 router.delete('/deletebug/:id' ,async(req, res) => {
     var id = req.params.id 
     try {
@@ -179,6 +182,7 @@ router.delete('/deletebug/:id' ,async(req, res) => {
     }
 })
 
+// Posting Comments by CC Authorities 
 router.patch('/postcomment/:id', async (req, res) => {
     var id = req.params.id  
     const {comments} = req.body
