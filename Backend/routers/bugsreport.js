@@ -109,15 +109,6 @@ router.post('/reportbug',async (req, res) => {
         var repo = 'WinterSemCPrograms';
         repo = repo.replace(/ /g, '-')
         console.log(`https://api.github.com/repos/${user}/${repo}/issues`)
-        // fetch (`https://api.github.com/repos/hardikkix/WinterSemCPrograms/issues`, {
-        //     method: 'post',
-        //     body: JSON.stringify(gitTemplate),
-        //     headers: {'Content-Type': 'application/json', 'Authorization': `token ${process.env.TOKEN}`}
-        // })
-        // .then( res => res.json())
-        // .then(json => {
-        //     console.log(`Issue created at ${json.url}`)
-        // })
         gitIssue.forEach(issue => {
             fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
                 method: 'post',
