@@ -107,11 +107,19 @@ router.post('/reportbug',async (req, res) => {
         var repo = project;
         repo = repo.replace(/ /g, '-')
         console.log(`https://api.github.com/repos/${user}/${repo}/issues`)
+        fetch (`https://api.github.com/repos/${user}/${repo}/issues`, {
+            method: 'post',
+            body: JSON.stringify(issue),
+            headers: {'Content-Type': 'application/json', 'Authorization': `token ${process.env.TOKEN}`}
+        })
+        .then( res => res.json())
+        .then(json => {
+            console.log(`Issue created at ${json.url}`)
+        })
         // gitIssue.forEach(issue => {
         //     fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
         //         method: 'post',
         //         body:    JSON.stringify(issue),
-        //         headers: {'Content-Type': 'application/json', 'Authorization': `token ${process.env.TOKEN}`}
         //     })
         //     .then(res =>  res.json())
         //     .then(json => {
