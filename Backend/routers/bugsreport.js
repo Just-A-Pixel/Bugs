@@ -2,10 +2,32 @@ const express = require('express')
 const router = express.Router();
 const Bugs = require('../models/BugsModel');
 const User = require('../models/User-Google')
+const Label = require('../models/Labels')
 const {spawn} = require('child_process');
 const {ensureAuthenticated} = require('../config/auth');
 const { json } = require('body-parser');
 const fetch = require('node-fetch');
+
+// Router For Posting The Labels for CC Projects --> Specifically For CC Members 
+router.post('/addlabels', async(req, res) => {
+    var label = req.body.label 
+    const exist = await Label.findOne({label})
+    if (exist){
+        console.log(`An Label Already Exists `)
+        res.json('An Label Already Exists ')
+    } else {
+        const newLabel = new Label({label})
+        await newLabel.save()
+        res.json(newLabel)
+    }
+})
+
+// Router For Outputting the Labels Available 
+router.get('/getlabels', async(req, res) => {
+    const labels = await Label.find({})
+    console.log(labels)
+    res.json(labels)    
+})
 
 // Router For Posting The Project --> Specifically For CC Members
 router.post('/addprojectcodechef', async (req, res) => {
@@ -46,6 +68,7 @@ router.get('/issueid/:id', async (req, res) => {
     res.json(issues)
 }) 
 
+// Finding Issues in Particular Project with Certain Ids 
 router.get('/bug/:id', async(req, res) => { 
     var project = req.params.id ;
     
@@ -67,17 +90,19 @@ router.get('/bug/:id', async(req, res) => {
     }
 })
 
-
+// Posting The Bugs 
 router.post('/reportbug',async (req, res) => {
     console.log(req.body)
     var project = req.body.project
     var title = req.body.title
     var description = req.body.description
     var issuedby = req.body.issuedby
+    var gitLabels = req.body.labels
     var template = {
         title,
         description,
-        issuedby
+        issuedby,
+        gitLabels
     }
     try {
         const bug = await Bugs.findOne({
@@ -98,10 +123,9 @@ router.post('/reportbug',async (req, res) => {
         }
 
         var gitIssue = [];
-        var gitTemplate = {title, body: description}
+        var gitTemplate = {title, body: description, labels: [gitLabels]}
         gitIssue.push((gitTemplate))
-        JSON.stringify(gitIssue)
-        console.log(gitIssue)
+        console.log(gitTemplate)
         
         const user = 'CodeChefVIT';
         var repo = project;
@@ -125,6 +149,7 @@ router.post('/reportbug',async (req, res) => {
     }
 })
 
+// Updation of Bug by User
 router.patch('/updatebug/:id',async (req, res) => {
     
     var id = req.params.id 
@@ -158,6 +183,7 @@ router.patch('/updatebug/:id',async (req, res) => {
     }
 })
 
+// Deletion By User 
 router.delete('/deletebug/:id' ,async(req, res) => {
     var id = req.params.id 
     try {
@@ -178,6 +204,7 @@ router.delete('/deletebug/:id' ,async(req, res) => {
     }
 })
 
+// Posting Comments by CC Authorities 
 router.patch('/postcomment/:id', async (req, res) => {
     var id = req.params.id  
     const {comments} = req.body

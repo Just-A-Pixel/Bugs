@@ -26,6 +26,10 @@ const bugsSchema = new mongoose.Schema({
             type: Boolean,
             default: false,
             required: false 
+        },
+        labels: {
+            type: String,
+            required: false 
         }
     }]
 })
