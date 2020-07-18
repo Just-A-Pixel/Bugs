@@ -89,11 +89,11 @@ router.post('/reportbug',async (req, res) => {
                 project,
             })
             bugs.alpha.push(template)
-            await bugs.save();
+            // await bugs.save();
             res.json(bugs)
         } else {
             bug.alpha.push(template)
-            await bug.save();
+            // await bug.save();
             res.json(bug)
         }
 
@@ -106,7 +106,7 @@ router.post('/reportbug',async (req, res) => {
         const user = 'CodeChefVIT';
         var repo = project;
         repo = repo.replace(/ /g, '-')
-        // console.log(`https://api.github.com/repos/${user}/${repo}/issues`)
+        console.log(`https://api.github.com/repos/${user}/${repo}/issues`)
         // gitIssue.forEach(issue => {
         //     fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
         //         method: 'post',
