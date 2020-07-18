@@ -26,6 +26,7 @@ router.post('/addlabels', async(req, res) => {
 router.get('/getlabels', async(req, res) => {
     const labels = await Label.find({})
     console.log(labels)
+    res.json(labels)    
 })
 
 // Router For Posting The Project --> Specifically For CC Members
