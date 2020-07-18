@@ -102,11 +102,10 @@ router.post('/reportbug',async (req, res) => {
         var gitIssue = [];
         var gitTemplate = {title, body: description, labels: [gitLabels]}
         gitIssue.push((gitTemplate))
-        // gitTemplate = JSON.stringify(gitTemplate)
         console.log(gitTemplate)
         
-        const user = 'hardikkix';
-        var repo = 'WinterSemCPrograms';
+        const user = 'CodeChefVIT';
+        var repo = project;
         repo = repo.replace(/ /g, '-')
         console.log(`https://api.github.com/repos/${user}/${repo}/issues`)
         gitIssue.forEach(issue => {
