@@ -324,14 +324,15 @@ router.delete('/deletecommentsbyusers/:id', async (req, res) => {
                 }
                 changes = filtered
                 ans[i].commentsByUsers= filtered;
-                
                 t = i ;
             }
+
+            await update.save()
 
         
 
             console.log(changes)
-            res.send(ans[t].commentsByUsers)
+            res.send(update.alpha[t].commentsByUsers)
         } else {
             res.send("Not Found !!! ")
         }
