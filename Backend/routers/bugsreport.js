@@ -23,7 +23,7 @@ router.post('/addlabels', async(req, res) => {
 })
 
 // Router For Outputting the Labels Available 
-router.get('/getlabels', async(req, res) => {
+router.get('/getlabels', async(req, res) => {   
     const labels = await Label.find({})
     console.log(labels)
     res.json(labels)    
@@ -210,7 +210,7 @@ router.patch('/postcomment/:id', async (req, res) => {
     const {comments} = req.body
     
     // Temp Setup --> Start 
-    const user = await User.findOne({_id: "5f08a2dde501f96c62a8b758"})
+    const user = await User.findOne({_id: "5f05c368e20877d6d7fc7015"})
     req.user = user  
     // Temp Setup --> End 
     
@@ -241,5 +241,107 @@ router.patch('/postcomment/:id', async (req, res) => {
         res.json("Not Authorized")
     }
 })
+
+// Posting Comments By Authors as well as CC Members 
+router.patch('/addcommentsbyusers/:id', async (req, res) => {
+    
+    var id = req.params.id ;
+    const {userComments, issuedby} = req.body ;
+
+    var modeltemplate = {discussions: userComments, name: issuedby}
+
+    try {
+        const update = await Bugs.findOne({"alpha._id": id });
+        const ans = await update.alpha
+        var t = 0 ;
+        for (var i = 0 ; i < ans.length ; i++ ){
+            if (ans[i]._id == id){
+                ans[i].commentsByUsers.push(modeltemplate)
+                t = i ;
+                break ;
+            }
+        }
+        await update.save()
+        res.send(ans[t])
+
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
+
+})
+
+// Editing The Comment Under Discussion Tab 
+router.patch('/editcommentsbyusers/:id', async(req, res) => {
+    var id = req.params.id ;
+    const {editComments} = req.body ;
+
+    try {
+        const update = await Bugs.findOne({"alpha.commentsByUsers._id" : id })
+        const ans = await update.alpha
+        var t = 0 ;
+        var l = 0 ;
+
+        for(var i = 0 ; i < ans.length ; i++ ){
+            var changes = ans[i].commentsByUsers;
+            for (var j = 0 ; j < changes.length ; j++ ){
+                if (changes[j]._id == id){
+                    if (editComments){
+                        changes[j].discussions = editComments;
+                        t = j ;
+                        l = i ;
+                    }
+                    break ;
+                }
+            }
+        }
+
+        await update.save();
+
+        res.send(update)
+
+    } catch (err){
+        console.log(err);
+        res.send(err);
+    }
+})
+
+// Deleting the Route for Discussion Comments
+router.delete('/deletecommentsbyusers/:id', async (req, res) => {
+    var id = req.params.id ;
+    try {
+        const update = await Bugs.findOne({"alpha.commentsByUsers._id" : id })
+        if (update){
+            const ans = await update.alpha 
+            var t = 0 
+            var l = 0 
+
+            var changes = 0 ;
+            for (var i = 0 ; i < ans.length ; i++){
+                changes = ans[i].commentsByUsers;
+                for (var j = 0 ; j < changes.length ; j++ ){
+                    var filtered = changes.filter(function(value, index, arr){ return value._id != id;});
+                }
+                changes = filtered
+                ans[i].commentsByUsers= filtered;
+                t = i ;
+            }
+
+            await update.save()
+
+        
+
+            console.log(changes)
+            res.send(update.alpha[t].commentsByUsers)
+        } else {
+            res.send("Not Found !!! ")
+        }
+
+    } catch (err){
+        console.log(err);
+        res.send(err);
+    }
+})
+
 
 module.exports = router
