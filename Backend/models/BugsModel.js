@@ -30,7 +30,17 @@ const bugsSchema = new mongoose.Schema({
         labels: {
             type: String,
             required: false 
-        }
+        },
+        commentsByUsers : [{
+            discussions : {
+                type: String,
+                required: false 
+            },
+            name : {
+                type: String,
+                required: false 
+            }
+        }]
     }]
 })
 
