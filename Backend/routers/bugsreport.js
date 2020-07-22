@@ -307,7 +307,21 @@ router.patch('/editcommentsbyusers/:id', async(req, res) => {
 })
 
 // Deleting the Route for Discussion Comments
-router.delete('/deletecommentsbyusers')
+router.delete('/deletecommentsbyusers/:id', async (req, res) => {
+    var id = req.params.id ;
+    try {
+        const update = await Bugs.findOne({"alpha.commentsByUsers._id" : id })
+        if (update){
+
+        } else {
+            res.send("Not Found !!! ")
+        }
+
+    } catch (err){
+        console.log(err);
+        res.send(err);
+    }
+})
 
 
 module.exports = router
