@@ -316,15 +316,22 @@ router.delete('/deletecommentsbyusers/:id', async (req, res) => {
             var t = 0 
             var l = 0 
 
+            var changes = 0 ;
             for (var i = 0 ; i < ans.length ; i++){
-                var changes = ans[i].commentsByUsers;
+                changes = ans[i].commentsByUsers;
                 for (var j = 0 ; j < changes.length ; j++ ){
                     var filtered = changes.filter(function(value, index, arr){ return value._id != id;});
                 }
+                changes = filtered
+                ans[i].commentsByUsers= filtered;
+                
+                t = i ;
             }
 
-            console.log(filtered)
-            res.send(filtered)
+        
+
+            console.log(changes)
+            res.send(ans[t].commentsByUsers)
         } else {
             res.send("Not Found !!! ")
         }
