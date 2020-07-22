@@ -306,4 +306,8 @@ router.patch('/editcommentsbyusers/:id', async(req, res) => {
     }
 })
 
+// Deleting the Route for Discussion Comments
+router.delete('/deletecommentsbyusers')
+
+
 module.exports = router
