@@ -312,7 +312,19 @@ router.delete('/deletecommentsbyusers/:id', async (req, res) => {
     try {
         const update = await Bugs.findOne({"alpha.commentsByUsers._id" : id })
         if (update){
+            const ans = await update.alpha 
+            var t = 0 
+            var l = 0 
 
+            for (var i = 0 ; i < ans.length ; i++){
+                var changes = ans[i].commentsByUsers;
+                for (var j = 0 ; j < changes.length ; j++ )
+                    var filtered = ans.filter(function(value, index, arr){ return (value.commentsByUsers[j]._id != id)})
+                console.log('/' + filtered + '/')
+            }
+
+            console.log(ans)
+            res.send(ans)
         } else {
             res.send("Not Found !!! ")
         }
