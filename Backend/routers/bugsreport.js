@@ -2,8 +2,46 @@ const express = require('express')
 const router = express.Router();
 const Bugs = require('../models/BugsModel');
 const User = require('../models/User-Google')
-const {ensureAuthenticated} = require('../config/auth')
+const Label = require('../models/Labels')
+const {spawn} = require('child_process');
+const {ensureAuthenticated} = require('../config/auth');
+const { json } = require('body-parser');
+const fetch = require('node-fetch');
 
+// Router For Posting The Labels for CC Projects --> Specifically For CC Members 
+router.post('/addlabels', async(req, res) => {
+    var label = req.body.label 
+    const exist = await Label.findOne({label})
+    if (exist){
+        console.log(`An Label Already Exists `)
+        res.json('An Label Already Exists ')
+    } else {
+        const newLabel = new Label({label})
+        await newLabel.save()
+        res.json(newLabel)
+    }
+})
+
+// Router For Outputting the Labels Available 
+router.get('/getlabels', async(req, res) => {   
+    const labels = await Label.find({})
+    console.log(labels)
+    res.json(labels)    
+})
+
+// Router For Posting The Project --> Specifically For CC Members
+router.post('/addprojectcodechef', async (req, res) => {
+    var project = req.body.project
+    const bugs = await Bugs.findOne({project})
+    console.log(bugs)
+    if (bugs){
+        res.json("The Project Already Exists !!! ")
+    } else {
+        const update = new Bugs({project})
+        await update.save()
+        res.json(update)
+    }
+})
 
 // Getting All the Projects 
 router.get('/allprojects',async (req, res) => {
@@ -30,6 +68,7 @@ router.get('/issueid/:id', async (req, res) => {
     res.json(issues)
 }) 
 
+// Finding Issues in Particular Project with Certain Ids 
 router.get('/bug/:id', async(req, res) => { 
     var project = req.params.id ;
     
@@ -51,17 +90,19 @@ router.get('/bug/:id', async(req, res) => {
     }
 })
 
-
+// Posting The Bugs 
 router.post('/reportbug',async (req, res) => {
     console.log(req.body)
     var project = req.body.project
     var title = req.body.title
     var description = req.body.description
     var issuedby = req.body.issuedby
+    var gitLabels = req.body.labels
     var template = {
         title,
         description,
-        issuedby
+        issuedby,
+        gitLabels
     }
     try {
         const bug = await Bugs.findOne({
@@ -80,11 +121,35 @@ router.post('/reportbug',async (req, res) => {
             await bug.save();
             res.json(bug)
         }
+
+        var gitIssue = [];
+        var gitTemplate = {title, body: description, labels: [gitLabels]}
+        gitIssue.push((gitTemplate))
+        console.log(gitTemplate)
+        
+        const user = 'CodeChefVIT';
+        var repo = project;
+        repo = repo.replace(/ /g, '-')
+        console.log(`https://api.github.com/repos/${user}/${repo}/issues`)
+        gitIssue.forEach(issue => {
+            fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
+                method: 'post',
+                body:    JSON.stringify(issue),
+                headers: {'Content-Type': 'application/json', 'Authorization': `token ${process.env.TOKEN}`}
+            })
+            .then(res =>  res.json())
+            .then(json => {
+                console.log(`Issue created at ${json.url}`)
+            })
+        })
+
+
     } catch (e) {
         console.log(e)
     }
 })
 
+// Updation of Bug by User
 router.patch('/updatebug/:id',async (req, res) => {
     
     var id = req.params.id 
@@ -118,6 +183,7 @@ router.patch('/updatebug/:id',async (req, res) => {
     }
 })
 
+// Deletion By User 
 router.delete('/deletebug/:id' ,async(req, res) => {
     var id = req.params.id 
     try {
@@ -138,12 +204,13 @@ router.delete('/deletebug/:id' ,async(req, res) => {
     }
 })
 
+// Posting Comments by CC Authorities 
 router.patch('/postcomment/:id', async (req, res) => {
     var id = req.params.id  
     const {comments} = req.body
     
     // Temp Setup --> Start 
-    const user = await User.findOne({_id: "5f08a2dde501f96c62a8b758"})
+    const user = await User.findOne({_id: "5f05c368e20877d6d7fc7015"})
     req.user = user  
     // Temp Setup --> End 
     
@@ -174,5 +241,107 @@ router.patch('/postcomment/:id', async (req, res) => {
         res.json("Not Authorized")
     }
 })
+
+// Posting Comments By Authors as well as CC Members 
+router.patch('/addcommentsbyusers/:id', async (req, res) => {
+    
+    var id = req.params.id ;
+    const {userComments, issuedby} = req.body ;
+
+    var modeltemplate = {discussions: userComments, name: issuedby}
+
+    try {
+        const update = await Bugs.findOne({"alpha._id": id });
+        const ans = await update.alpha
+        var t = 0 ;
+        for (var i = 0 ; i < ans.length ; i++ ){
+            if (ans[i]._id == id){
+                ans[i].commentsByUsers.push(modeltemplate)
+                t = i ;
+                break ;
+            }
+        }
+        await update.save()
+        res.send(ans[t])
+
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
+
+})
+
+// Editing The Comment Under Discussion Tab 
+router.patch('/editcommentsbyusers/:id', async(req, res) => {
+    var id = req.params.id ;
+    const {editComments} = req.body ;
+
+    try {
+        const update = await Bugs.findOne({"alpha.commentsByUsers._id" : id })
+        const ans = await update.alpha
+        var t = 0 ;
+        var l = 0 ;
+
+        for(var i = 0 ; i < ans.length ; i++ ){
+            var changes = ans[i].commentsByUsers;
+            for (var j = 0 ; j < changes.length ; j++ ){
+                if (changes[j]._id == id){
+                    if (editComments){
+                        changes[j].discussions = editComments;
+                        t = j ;
+                        l = i ;
+                    }
+                    break ;
+                }
+            }
+        }
+
+        await update.save();
+
+        res.send(update)
+
+    } catch (err){
+        console.log(err);
+        res.send(err);
+    }
+})
+
+// Deleting the Route for Discussion Comments
+router.delete('/deletecommentsbyusers/:id', async (req, res) => {
+    var id = req.params.id ;
+    try {
+        const update = await Bugs.findOne({"alpha.commentsByUsers._id" : id })
+        if (update){
+            const ans = await update.alpha 
+            var t = 0 
+            var l = 0 
+
+            var changes = 0 ;
+            for (var i = 0 ; i < ans.length ; i++){
+                changes = ans[i].commentsByUsers;
+                for (var j = 0 ; j < changes.length ; j++ ){
+                    var filtered = changes.filter(function(value, index, arr){ return value._id != id;});
+                }
+                changes = filtered
+                ans[i].commentsByUsers= filtered;
+                t = i ;
+            }
+
+            await update.save()
+
+        
+
+            console.log(changes)
+            res.send(update.alpha[t].commentsByUsers)
+        } else {
+            res.send("Not Found !!! ")
+        }
+
+    } catch (err){
+        console.log(err);
+        res.send(err);
+    }
+})
+
 
 module.exports = router

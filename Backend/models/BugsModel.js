@@ -8,7 +8,7 @@ const bugsSchema = new mongoose.Schema({
     alpha: [{
         title: {
             type: String,
-            required: true
+            required: false
         },
         description: {
             type: String,
@@ -26,7 +26,21 @@ const bugsSchema = new mongoose.Schema({
             type: Boolean,
             default: false,
             required: false 
-        }
+        },
+        labels: {
+            type: String,
+            required: false 
+        },
+        commentsByUsers : [{
+            discussions : {
+                type: String,
+                required: false 
+            },
+            name : {
+                type: String,
+                required: false 
+            }
+        }]
     }]
 })
 
