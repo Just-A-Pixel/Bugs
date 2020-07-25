@@ -1,6 +1,5 @@
-// var numberOfProjects = 10
+
 var currentObject = 0;
-// var list = 0
 
 $.get('https://codechefvitbugs.herokuapp.com/report/bug/all', function(data, status){
   
@@ -8,12 +7,12 @@ $.get('https://codechefvitbugs.herokuapp.com/report/bug/all', function(data, sta
         document.getElementById("test").innerHTML+= '<li class="project-element"  onclick="select(this)" onmouseover="addAnimate(this)" onmouseout="removeAnimate(this)">'+data[i].project+'</li><br>'
         document.getElementById("project").innerHTML += "<option>"+data[i].project+"</option>"
     }
-    console.log("Recieved projects list")
+    console.log("Recieved projects list and size = "+i)
 });
 
 // Side project list animations
 
-function addAnimate(x) {x.style.boxShadow = "inset "+x.offsetWidth+"px 0 0 0 #dce9e6"}
+function addAnimate(x) {x.style.boxShadow = "inset "+(x.offsetWidth)+"px 0 0 0 #dce9e6"}
 
 function removeAnimate(x) {x.style.boxShadow = "none"}
 
@@ -33,13 +32,19 @@ function select(x) {
             if(data[i].project == x.innerHTML) {
                 console.log("success")
                 for(j=0; j<data[i].alpha.length; j++){
-                console.log(data[i].alpha[j])
-                document.getElementById("issue-list").innerHTML +=  '<div class="container tweet">'+
-                                                                                    '<button class="btn remove-tweet" onclick="removeBug(this)">X</button><br>'+
-                                                                                    '<h4>'+data[i].alpha[j].title+'</h4>'+
-                                                                                    '<p>'+data[i].alpha[j].description+'</p>'+
-                                                                                    '<h6>'+data[i].alpha[j]._id+'</h6>'+
-                                                                                '</div>'
+                console.log(data[i].project)
+                document.getElementById("issue-list").innerHTML += '<div class="container tweet">'+
+                                                                    '<p class="title">'+
+                                                                        '<img src="assets/css/img/bug.svg" class="bug">'+
+                                                                        '<div class="btn remove-tweet" onclick="removeBug(this)">X</div>'+
+                                                                        '<span class = "tweet-name">'+data[i].alpha[j].issuedby+'</span><br>'+
+                                                                        '<span class = "tweet-project">Found a bug in: '+data[i].project+'</span>'+
+                                                                    '</p>'+
+                                                                    '<hr>'+
+                                                                    '<h4 class="tweet-title">'+data[i].alpha[j].title+'</h4>'+
+                                                                    '<p class="tweet-description">'+data[i].alpha[j].description+'</p>'+
+                                                                    '<h6 class = "tweet-id "onselectstart="return false">'+data[i].alpha[j]._id+'</h6>'+
+                                                                '</div>'
                 }
             }
         }
