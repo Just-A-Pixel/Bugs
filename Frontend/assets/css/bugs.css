@@ -51,39 +51,65 @@
 }
 
 .main-area {
-    background-color: rgb(233, 233, 233);
+    background-color: whitesmoke;
 }
 
 .tweet {
-    background-color: rgb(209, 219, 219);
+    background-color: rgb(255, 255, 255);
+    max-width: 800px;
 }
 
-.remove-tweet,.remove-tweet-not {
-    color: rgb(240, 95, 119);
-    border-bottom: solid;
+.remove-tweet {
+    color: rgb(168, 168, 168);
     border-radius: 0;
-    margin-bottom: 20px;
-    transition: 500ms;
+    transition: 250ms;
+    padding: 5px 13px;
+    float: right;
+    margin-top: 7px;
 }
 
 .remove-tweet:hover {
-    background-color: tomato;
-    border-color: tomato;
-    color: whitesmoke;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
-    transition: 500ms;
-    box-shadow: 0px 0px 5px 0px #646464;
+    background-color: rgba(172, 172, 172, 0);
+    color: tomato;
+    font-size: 25px;
+    transition: 100ms;
+    /* border-bottom: solid 2px; */
+
+    /* box-shadow: 0px 0px 5px 0px #646464; */
 }
 
-.remove-tweet-not {
-    color: teal;
-    
+.bug {
+    width: 50px;
+    margin: 1px 20px 4px 0;
+    background: rgb(226, 226, 226);
+    padding: 5px;
+    border-radius: 25px;
+    opacity: 0.5;
+    float: left;
 }
 
+.title {
+    font-size: 14px;
+    position: relative;
+    top: 5px;
+    width: 300px;
+}
 
-.remove-tweet-not:hover {
-    background-color: teal;
-    border-color: teal;
-    color: whitesmoke;
+.tweet-name {
+    color: rgb(46, 46, 46);
+    font-weight: bold;
+    position: relative;
+    top: 9px;
+}
+
+.tweet-project {
+    color: rgba(46, 46, 46, 0.76);
+    position: relative;
+    top: 3px;
+    font-size: 13px;
+}
+
+.tweet-id {
+    color: rgba(255, 99, 71, 0);
+    cursor: default;
 }
