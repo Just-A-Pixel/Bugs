@@ -271,6 +271,18 @@ router.patch('/addcommentsbyusers/:id', async (req, res) => {
 
 })
 
+// Get Route for Comments 5f231bbe79e9bfc3c3f796e4
+router.get('/getcommentsbyusers/:id', async(req, res) => {
+    var id = req.params.id ;
+    try {
+        const project = await Bugs.findOne({"alpha._id": id });
+        res.send(project.alpha);
+        console.log(project.alpha)
+    }catch(e){
+        res.json(e);
+    }
+})
+
 // Editing The Comment Under Discussion Tab 
 router.patch('/editcommentsbyusers/:id', async(req, res) => {
     var id = req.params.id ;
