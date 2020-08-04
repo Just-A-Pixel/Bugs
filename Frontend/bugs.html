@@ -29,12 +29,32 @@
 
 
 <body>
-    <div class="container-fluid" style="background-color: aliceblue;">
-        adwawad
+    <div class="container-fluid header" id = "main-head" style="background-image: url('assets/css/img/header.svg');">
+        <div class="text-center">
+            <br><br>
+            <h1 class="header-head">What's bugging you today?</h1><br>
+            <div class="btn btn-light add-bug" id="1" onclick="showForm(this)">Report A Bug</div> <br><br>
+        
+        
+            <form id="report-bug" style="display: none;">
+                <!-- <textarea rows="4" cols="50" id="bug"></textarea> -->
+                <!-- <button class="btn btn-danger" onclick="hideReportBug(this)">X</button><br> -->
+                <select id="project" placeholder = "Project">
+                <option>Select Project</option>
+                </select>
+                <br>
+                <input type="text" id="title" placeholder = "Title"><br>
+                <input type="text" id="description" placeholder = "Description"><br>
+                <input type="text" id="issuedby" placeholder = "Your Name"><br>
+                <div class="btn btn-dark submit-bug" onclick="submitBug()">submit</button></div>
+            </form>
+        </div>
+        
     </div>
     <div class="row">
         
         <div class="col-sm-3 col-md-2" id = "left-column">
+            <br>
             <span class="add" onclick="reveal(this)">+</span>
             <br><br>
             <form id="left-side" style="display: none;">
@@ -46,10 +66,27 @@
         </div>
 
         <div class="col-sm-8 main-area">
-            <div class="btn btn-light add-bug" onclick="showForm()">Report A Bug</div> <br><br>
+            
 
             <br>
-            <!-- <div class="container tweet">
+         
+            
+            <div id="issue-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center footer">
+        <br>bugs.codechefvit.com <br><br>
+        <p style="font-size: 20px; color: rgb(172, 172, 172);">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at justo lacinia, accumsan lorem id, auctor erat. <br> Nunc iaculis pellentesque sem a vehicula.</p>
+    </div>
+</body>
+<script src="assets/js/script.js"></script>
+</html>
+
+
+
+   <!-- <div class="container tweet">
                 <p class="title">
                     <img src="assets/css/img/bug.svg" class="bug">
                     <div class="btn remove-tweet" onclick="removeBug(this)">X</div>
@@ -60,25 +97,27 @@
                 <hr>
                 <h4 class="tweet-title">Lagging apk</h4>
                 <p class="tweet-description">Potatoes, potatoes, potatoes everywhere</p>
+                <img src="assets/css/img/chat.svg" style="width: 20px;">
+                <a href=#>Comments</a>
+                 <br><br>
+                <div class="comment-box ">
+                    <div class=" container text-center input" >
+                        <input type="text" class = "add-comment" name="" id="comment-input"> 
+                        <button class="btn btn-primary submit-comment"  onclick="addComment(this)">Comment</button>
+                    </div>
+                    <hr>
+                    <p class="container comment-title">
+                        <img src="assets/css/img/Ellipse 11.svg" class="bug2">
+                        <span class = "comment-name">Raj Anand</span><br>
+                        <span class = "comment">Found a bug in: FFDS</span> 
+                    </p>
+                    <hr>
+                    <p class="container comment-title">
+                        <img src="assets/css/img/Ellipse 11.svg" class="bug2">
+                        <span class = "comment-name">Raj Anand</span><br>
+                        <span class = "comment">Found a bug in: FFDS</span> 
+                    </p>
+                </div>                
                 <h6 class = "tweet-id "onselectstart="return false">data[i].alpha[j]._id</h6>
             </div> -->
-           
-            <form id="report-bug" style="display: none;">
-                <!-- <textarea rows="4" cols="50" id="bug"></textarea> -->
-                <!-- <button class="btn btn-danger" onclick="hideReportBug(this)">X</button><br> -->
-                <select id="project" placeholder = "Project">
-                <option>Select Project</option>
-                </select>
-                <br>
-                <input type="text" id="title" placeholder = "Title"><br>
-                <input type="text" id="description" placeholder = "Description"><br>
-                <input type="text" id="issuedby" placeholder = "Your Name"><br>
-                <div class="btn btn-dark" onclick="submitBug()">submit</button></div>
-            </form>
-            <div id="issue-list"></div>
-            </div>
-        </div>
-    </div>
-</body>
-<script src="assets/js/script.js"></script>
-</html>
+            

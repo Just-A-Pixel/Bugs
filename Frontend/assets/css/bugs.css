@@ -1,3 +1,27 @@
+input {
+    outline:none;
+   }
+   
+.header {
+    height: 200px;
+    background-repeat: no-repeat;
+    background-color: #1f1f1f;
+}
+
+.header-head {
+    color: whitesmoke;
+}
+
+#project, #title, #description, #issuedby {
+    border: none;
+    margin: 5px;
+    background-color: rgba(94, 94, 94, 0);
+    border-bottom: solid;
+    border-color: rgba(201, 201, 201, 0.363);
+    color: rgb(199, 199, 199);
+    padding: 2px;
+}
+
 .add {
     font-size: 30px;
     color: rgb(114, 114, 114);
@@ -112,4 +136,78 @@
 .tweet-id {
     color: rgba(255, 99, 71, 0);
     cursor: default;
+}
+
+/* Comment box */
+
+.show-comment-button {
+    color: rgb(8, 102, 102);
+    cursor: pointer;
+}
+
+.show-comment-button:hover {
+    text-decoration: underline;
+}
+
+.comment-box {
+    background-color: #f0f0f0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+}
+
+.input {
+    margin-top: 10px;
+}
+
+.add-comment {
+   border: none;
+   width: 450px;
+   border-radius: 15px;
+}
+.submit-comment {
+    border-radius: 15px;
+    height: 27px;
+    padding: 5px;
+    font-size: 10px;
+    position: relative;
+    bottom: 2px;
+    background-color: rgb(109, 155, 255) ;
+    border-width: 0;
+}
+
+.comment-title {
+    padding: 2px 15px 2px 15px;
+}
+
+.bug2 {
+    width: 30px;
+}
+
+.comment-name {
+    margin-left: 3px;
+    font-weight: 500;
+   
+}
+
+@media only screen and (max-width: 910px) {
+    .add-comment {
+        width: 320px;
+    }
+}
+
+.comment {
+font-style: normal;
+font-weight: normal;
+font-size: 15px;
+line-height: 35px;
+}
+
+/* footer */
+
+.footer {
+    background-color: black;
+    color: whitesmoke;
+    padding: 30px;
+    font-size: 40px;
 }
