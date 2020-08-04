@@ -1,4 +1,5 @@
 
+
 var currentObject = 0;
 
 $.get('https://codechefvitbugs.herokuapp.com/report/bug/all', function(data, status){
@@ -33,18 +34,35 @@ function select(x) {
                 console.log("success")
                 for(j=0; j<data[i].alpha.length; j++){
                 console.log(data[i].project)
+                
+                var commentString = ""
+                for(k=0; k<data[i].alpha[j].commentsByUsers.length; k++){
+                                                    commentString +=  
+                                                                    '<p class="container comment-title">'+
+                                                                    '<img src="assets/css/img/Ellipse 11.svg" class="bug2">'+
+                                                                    '<span class = "comment-name">'+data[i].alpha[j].commentsByUsers[k].name+'</span><br>'+
+                                                                    '<span class = "comment">'+data[i].alpha[j].commentsByUsers[k].discussions+'</span>'+
+                                                                    '</p>'+'<hr>'}
+
                 document.getElementById("issue-list").innerHTML += '<div class="container tweet">'+
-                                                                    '<p class="title">'+
-                                                                        '<img src="assets/css/img/bug.svg" class="bug">'+
-                                                                        '<div class="btn remove-tweet" onclick="removeBug(this)">X</div>'+
-                                                                        '<span class = "tweet-name">'+data[i].alpha[j].issuedby+'</span><br>'+
-                                                                        '<span class = "tweet-project">Found a bug in: '+data[i].project+'</span>'+
-                                                                    '</p>'+
-                                                                    '<hr>'+
+                                                                        '<p class="title">'+
+                                                                            '<img src="assets/css/img/bug.svg" class="bug">'+
+                                                                            '<div class="btn remove-tweet" onclick="removeBug(this)">X</div>'+
+                                                                            '<span class = "tweet-name">'+data[i].alpha[j].issuedby+'</span><br>'+
+                                                                            '<span class = "tweet-project">Found a bug in: '+data[i].project+'</span>'+
+                                                                        '</p>'+
+                                                                        '<hr>'+
                                                                     '<h4 class="tweet-title">'+data[i].alpha[j].title+'</h4>'+
                                                                     '<p class="tweet-description">'+data[i].alpha[j].description+'</p>'+
-                                                                    '<h6 class = "tweet-id "onselectstart="return false">'+data[i].alpha[j]._id+'</h6>'+
-                                                                '</div>'
+                                                                    '<img src="assets/css/img/chat.svg" style="width: 20px;"> <span class="show-comment-button" onclick="showComment(this)">Comments</span>'+
+                                                                        '<div class="comment-box " style="display: none;">'+
+                                                                            '<div class=" container text-center input" ><input type="text" class = "add-comment" > <button class="btn btn-primary submit-comment" onclick="addComment(this)">Comment</button>'+
+                                                                            '</div>'+
+                                                                            '<hr>'+ commentString +
+                                                                        '</div>'+
+                                                                        '<h6 class = "tweet-id "onselectstart="return false">'+data[i].alpha[j]._id+'</h6>'+
+                                                                    '</div>'
+                console.log(data[i].alpha[j].commentsByUsers)
                 }
             }
         }
@@ -67,8 +85,10 @@ function submitBug() {
     console.log(bugTitle)
     console.log(bugDescription)
     console.log(bugIssuedBy)
-    document.getElementById("report-bug").style.display = "none"
-
+    document.getElementById("report-bug").style.display = "none";
+    document.getElementById("1").parentNode.parentNode.style.height = "200px";
+    console.log()
+    
     $.post("https://codechefvitbugs.herokuapp.com/report/reportbug", 
     {
         project: bugProject,
@@ -86,8 +106,8 @@ function submitBug() {
 // Remove an issue
 
 function removeBug(x) {
-    console.log(x.parentNode.lastElementChild.innerHTML)
-    var idToDelete = x.parentNode.lastElementChild.innerHTML
+    console.log(x.parentNode.parentNode.lastElementChild.innerHTML)
+    var idToDelete = x.parentNode.parentNode.lastElementChild.innerHTML
     var r = confirm("Are you sure you want to remove?");
     if (r==true){
         x.parentNode.remove()
@@ -132,10 +152,45 @@ function submitProject() {
 }
 
 
-function showForm() {
+function showForm(x) {
     document.getElementById("report-bug").style.display = "inline-block"
+    x.parentNode.parentNode.style.height = "400px"
+    console.log(x.parentNode.parentNode)
 }
 
 function hideReportBug(x){
     x.parentNode.style.visibility = "hidden"
+}
+
+
+// chat
+
+
+// $.get('https://codechefvitbugs.herokuapp.com/report/bug/all', function(data, status){
+//     console.log(data)
+// });
+
+function addComment(x) {
+
+    issueId = x.parentNode.parentNode.parentNode.lastElementChild.innerHTML
+    patch = x.parentNode.firstElementChild.value
+
+    console.log(patch)
+
+    $.ajax({
+        type: 'PATCH',
+        url: 'https://codechefvitbugs.herokuapp.com/report/addcommentsbyusers/'+issueId,
+        data: {
+            userComments: patch,
+            issuedby: "DJ"
+        },
+        success: function(result) {
+            console.log("added comment")
+        }
+     });
+}
+
+function showComment(x) {
+    console.log(x.nextElementSibling)
+    x.nextElementSibling.style.display = "block"
 }
