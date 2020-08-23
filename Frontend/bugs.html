@@ -28,7 +28,7 @@
 </head>
 
 
-<body>
+<body><h6 class="logout" onclick="logout()">Logout</h6>
     <div class="container-fluid header" id = "main-head" style="background-image: url('assets/css/img/header.svg');">
         <div class="text-center">
             <br><br>
@@ -37,8 +37,6 @@
         
         
             <form id="report-bug" style="display: none;">
-                <!-- <textarea rows="4" cols="50" id="bug"></textarea> -->
-                <!-- <button class="btn btn-danger" onclick="hideReportBug(this)">X</button><br> -->
                 <select id="project" placeholder = "Project">
                 <option>Select Project</option>
                 </select>
@@ -66,11 +64,7 @@
         </div>
 
         <div class="col-sm-8 main-area">
-            
-
-            <br>
-         
-            
+            <br>            
             <div id="issue-list"></div>
             </div>
         </div>
