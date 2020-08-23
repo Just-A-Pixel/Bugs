@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bugs.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+</head>
+
+
+<body><h6 class="logout" onclick="logout()">Logout</h6>
+    <div class="container-fluid header" id = "main-head" style="background-image: url('assets/css/img/header.svg');">
+        <div class="text-center">
+            <br><br>
+            <h1 class="header-head">What's bugging you today?</h1><br>
+            <div class="btn btn-light add-bug" id="1" onclick="showForm(this)">Report A Bug</div> <br><br>
+        
+        
+            <form id="report-bug" style="display: none;">
+                <select id="project" placeholder = "Project">
+                <option>Select Project</option>
+                </select>
+                <br>
+                <input type="text" id="title" placeholder = "Title"><br>
+                <input type="text" id="description" placeholder = "Description"><br>
+                <input type="text" id="issuedby" placeholder = "Your Name"><br>
+                <div class="btn btn-dark submit-bug" onclick="submitBug()">submit</button></div>
+            </form>
+        </div>
+        
+    </div>
+    <div class="row">
+        
+        <div class="col-sm-3 col-md-2" id = "left-column">
+            <!-- <span class="add" onclick="reveal(this)">+</span> -->
+            <br>
+            <form id="left-side" style="display: none;">
+                <input type="text" id="project-input">
+                <div class="btn" onclick="submitProject()">submit</button></div>
+            </form>
+
+            <ul class="project-list" id="test"></ul>
+        </div>
+
+        <div class="col-sm-8 main-area">
+            
+
+            <br>
+         
+            
+            <div id="issue-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid text-center footer">
+        <br>bugs.codechefvit.com <br><br>
+        <p style="font-size: 20px; color: rgb(172, 172, 172);">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at justo lacinia, accumsan lorem id, auctor erat. <br> Nunc iaculis pellentesque sem a vehicula.</p>
+    </div>
+</body>
+<script src="assets/js/script.js"></script>
+</html>
+
+
+
+   <!-- <div class="container tweet">
+                <p class="title">
+                    <img src="assets/css/img/bug.svg" class="bug">
+                    <div class="btn remove-tweet" onclick="removeBug(this)">X</div>
+                    <span class = "tweet-name">Raj Anand</span><br>
+                    <span class = "tweet-project">Found a bug in: FFDS</span> 
+                </p>
+                
+                <hr>
+                <h4 class="tweet-title">Lagging apk</h4>
+                <p class="tweet-description">Potatoes, potatoes, potatoes everywhere</p>
+                <img src="assets/css/img/chat.svg" style="width: 20px;">
+                <a href=#>Comments</a>
+                 <br><br>
+                <div class="comment-box ">
+                    <div class=" container text-center input" >
+                        <input type="text" class = "add-comment" name="" id="comment-input"> 
+                        <button class="btn btn-primary submit-comment"  onclick="addComment(this)">Comment</button>
+                    </div>
+                    <hr>
+                    <p class="container comment-title">
+                        <img src="assets/css/img/Ellipse 11.svg" class="bug2">
+                        <span class = "comment-name">Raj Anand</span><br>
+                        <span class = "comment">Found a bug in: FFDS</span> 
+                    </p>
+                    <hr>
+                    <p class="container comment-title">
+                        <img src="assets/css/img/Ellipse 11.svg" class="bug2">
+                        <span class = "comment-name">Raj Anand</span><br>
+                        <span class = "comment">Found a bug in: FFDS</span> 
+                    </p>
+                </div>                
+                <h6 class = "tweet-id "onselectstart="return false">data[i].alpha[j]._id</h6>
+            </div> -->
+            

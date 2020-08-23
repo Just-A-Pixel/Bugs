@@ -47,7 +47,7 @@ function select(x) {
                 document.getElementById("issue-list").innerHTML += '<div class="container tweet">'+
                                                                         '<p class="title">'+
                                                                             '<img src="assets/css/img/bug.svg" class="bug">'+
-                                                                            '<div class="btn remove-tweet" onclick="removeBug(this)">X</div>'+
+                                                                            //'<div class="btn remove-tweet" onclick="removeBug(this)">X</div>'+
                                                                             '<span class = "tweet-name">'+data[i].alpha[j].issuedby+'</span><br>'+
                                                                             '<span class = "tweet-project">Found a bug in: '+data[i].project+'</span>'+
                                                                         '</p>'+
@@ -87,6 +87,19 @@ function submitBug() {
     console.log(bugIssuedBy)
     document.getElementById("report-bug").style.display = "none";
     document.getElementById("1").parentNode.parentNode.style.height = "200px";
+    
+        // Media query bug fix
+
+        function myFunction(x) {
+            if (x.matches) { // If media query matches
+                document.getElementById("1").parentNode.parentNode.style.height = "250px";
+       
+        }}
+        
+        var x = window.matchMedia("(max-width: 527px)")
+        myFunction(x) 
+        x.addListener(myFunction)
+
     console.log()
     
     $.post("https://codechefvitbugs.herokuapp.com/report/reportbug", 
@@ -155,20 +168,24 @@ function submitProject() {
 function showForm(x) {
     document.getElementById("report-bug").style.display = "inline-block"
     x.parentNode.parentNode.style.height = "400px"
-    console.log(x.parentNode.parentNode)
-}
+     // Media query bug fix
+
+     function myFunction(y) {
+        if (y.matches) { // If media query matches
+            x.parentNode.parentNode.style.height = "450px"}
+   
+    }
+    
+    var y = window.matchMedia("(max-width: 527px)")
+    myFunction(y) 
+    y.addListener(myFunction)
+    console.log(y.parentNode.parentNode)
+}   
+
 
 function hideReportBug(x){
     x.parentNode.style.visibility = "hidden"
 }
-
-
-// chat
-
-
-// $.get('https://codechefvitbugs.herokuapp.com/report/bug/all', function(data, status){
-//     console.log(data)
-// });
 
 function addComment(x) {
 
@@ -194,3 +211,12 @@ function showComment(x) {
     console.log(x.nextElementSibling)
     x.nextElementSibling.style.display = "block"
 }
+
+// Logout
+function logout() {
+    $.get('https://codechefvitbugs.herokuapp.com/users/logout', function(data, status){
+        console.log("Logged out")
+    });
+}
+
+

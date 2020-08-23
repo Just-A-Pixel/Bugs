@@ -1,3 +1,18 @@
+.logout {
+    text-align: end;
+    margin: 10px, 20px;
+    background: none;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    color: rgb(216, 216, 216);
+    cursor: pointer;
+}
+
+.logout:hover {
+    color: rgb(247, 245, 245);
+}
+
 input {
     outline:none;
    }
@@ -8,6 +23,11 @@ input {
     background-color: #1f1f1f;
 }
 
+@media only screen and (max-width: 527px) {
+    .header {
+        height: 250px;
+    }
+}
 .header-head {
     color: whitesmoke;
 }
