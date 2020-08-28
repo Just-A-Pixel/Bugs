@@ -19,7 +19,8 @@ router.get('/auth/google/redirect', passport.authenticate('google'), async (req,
     if (codechef){
       const update = await User.updateOne({googleId: user.googleId}, {$set: {isCodechef: true} })
       console.log(update)
-      res.send(codechef) 
+      console.log(codechef)
+      res.send(await User.findOne({googleId: user.googleId})) 
     } else {
       res.send("Not Found ")
     }

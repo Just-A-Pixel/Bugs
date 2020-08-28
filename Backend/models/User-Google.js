@@ -15,6 +15,9 @@ const userSchema = mongoose.Schema({
     },
     isCodechef: {
         type: Boolean
+    },
+    token : {
+        type: String
     }
 });
 module.exports = mongoose.model('UserGoogle', userSchema);
