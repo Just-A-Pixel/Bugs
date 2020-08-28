@@ -2,6 +2,7 @@ const passport = require('passport');
 const mongoose = require('mongoose')
 const flash = require('connect-flash')
 const User = require('../models/User-Google');
+const JWT = require('jsonwebtoken')
 require('dotenv').config();
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
