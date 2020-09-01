@@ -1,4 +1,5 @@
 const JWT = require("jsonwebtoken");
+const User = require('../models/User-Google')
 require('dotenv').config();
 
 module.exports = async function (req, res, next) {
@@ -8,7 +9,8 @@ module.exports = async function (req, res, next) {
     try {
         const verified = JWT.verify(token, process.env.JWTTOKEN)
         const check = await User.findOne({email : verified.email})
-        if (check.iscodechef){
+        console.log(check)
+        if (check.isCodechef){
             req.user = check 
             next()
         }else 
