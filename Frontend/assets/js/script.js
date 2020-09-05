@@ -16,7 +16,7 @@ console.log(token)
 
 
 var test_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjBkZGQ4YjhmYzc5NTAwMTc1NGI4NjEiLCJuYW1lIjoiUkFKIEFOQU5EIDE5QkNFMDE2NSIsImVtYWlsIjoicmFqLmFuYW5kMjAxOUB2aXRzdHVkZW50LmFjLmluIiwiaWF0IjoxNTk5MzE0NDY5LCJleHAiOjE1OTk0MDA4Njl9.pCuE6swzF68vgu0d-s2oeQ_TBf8ac8WFXxaOwsNZx2E'
-
+test_token = token
 $.ajax({
     url: 'https://codechefvitbugs.herokuapp.com/report/bug/all',
     type: 'GET',
