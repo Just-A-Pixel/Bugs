@@ -8,8 +8,12 @@ const {ensureAuthenticated} = require('../config/auth');
 const { json } = require('body-parser');
 const fetch = require('node-fetch');
 
+// Importing Middlewares
+const auth = require('../middlewares/auth')
+const adminauth = require('../middlewares/admin-auth')
+
 // Router For Posting The Labels for CC Projects --> Specifically For CC Members 
-router.post('/addlabels', async(req, res) => {
+router.post('/addlabels', auth,adminauth ,async(req, res) => {
     var label = req.body.label 
     const exist = await Label.findOne({label})
     if (exist){
@@ -23,14 +27,14 @@ router.post('/addlabels', async(req, res) => {
 })
 
 // Router For Outputting the Labels Available 
-router.get('/getlabels', async(req, res) => {   
+router.get('/getlabels', auth,async(req, res) => {   
     const labels = await Label.find({})
     console.log(labels)
     res.json(labels)    
 })
 
 // Router For Posting The Project --> Specifically For CC Members
-router.post('/addprojectcodechef', async (req, res) => {
+router.post('/addprojectcodechef', auth, adminauth,async (req, res) => {
     var project = req.body.project
     const bugs = await Bugs.findOne({project})
     console.log(bugs)
@@ -44,7 +48,7 @@ router.post('/addprojectcodechef', async (req, res) => {
 })
 
 // Getting All the Projects 
-router.get('/allprojects',async (req, res) => {
+router.get('/allprojects', auth,async (req, res) => {
     const bugs = await Bugs.find({})
     console.log(bugs)  
     project = [] 
@@ -55,7 +59,7 @@ router.get('/allprojects',async (req, res) => {
 })
 
 // Get all Bug Issue Ids for a Specific Project, Will Help in Frontend for Updation using Ids 
-router.get('/issueid/:id', async (req, res) => {
+router.get('/issueid/:id', auth,async (req, res) => {
     var id = req.params.id 
     const bugs = await Bugs.find({_id: id})
     issues = []
@@ -69,7 +73,7 @@ router.get('/issueid/:id', async (req, res) => {
 }) 
 
 // Finding Issues in Particular Project with Certain Ids 
-router.get('/bug/:id', async(req, res) => { 
+router.get('/bug/:id', auth,async(req, res) => { 
     var project = req.params.id ;
     
     if (project == 'all'){
@@ -91,7 +95,7 @@ router.get('/bug/:id', async(req, res) => {
 })
 
 // Posting The Bugs 
-router.post('/reportbug',async (req, res) => {
+router.post('/reportbug', auth,async (req, res) => {
     console.log(req.body)
     var project = req.body.project
     var title = req.body.title
@@ -150,7 +154,7 @@ router.post('/reportbug',async (req, res) => {
 })
 
 // Updation of Bug by User
-router.patch('/updatebug/:id',async (req, res) => {
+router.patch('/updatebug/:id', auth,async (req, res) => {
     
     var id = req.params.id 
     
@@ -184,7 +188,7 @@ router.patch('/updatebug/:id',async (req, res) => {
 })
 
 // Deletion By User 
-router.delete('/deletebug/:id' ,async(req, res) => {
+router.delete('/deletebug/:id', auth,async(req, res) => {
     var id = req.params.id 
     try {
         const bug = await Bugs.findOne({ "alpha._id": id})
@@ -205,13 +209,13 @@ router.delete('/deletebug/:id' ,async(req, res) => {
 })
 
 // Posting Comments by CC Authorities 
-router.patch('/postcomment/:id', async (req, res) => {
+router.patch('/postcomment/:id', adminauth,async (req, res) => {
     var id = req.params.id  
     const {comments} = req.body
     
     // Temp Setup --> Start 
-    const user = await User.findOne({_id: "5f05c368e20877d6d7fc7015"})
-    req.user = user  
+    // const user = await User.findOne({_id: "5f05c368e20877d6d7fc7015"})
+    // req.user = user  
     // Temp Setup --> End 
     
     console.log(req.user.isCodechef) 
@@ -243,7 +247,7 @@ router.patch('/postcomment/:id', async (req, res) => {
 })
 
 // Posting Comments By Authors as well as CC Members 
-router.patch('/addcommentsbyusers/:id', async (req, res) => {
+router.patch('/addcommentsbyusers/:id', auth,async (req, res) => {
     
     var id = req.params.id ;
     const {userComments, issuedby} = req.body ;
@@ -272,7 +276,7 @@ router.patch('/addcommentsbyusers/:id', async (req, res) => {
 })
 
 // Get Route for Comments 5f231bbe79e9bfc3c3f796e4
-router.get('/getcommentsbyusers/:id', async(req, res) => {
+router.get('/getcommentsbyusers/:id', auth,async(req, res) => {
     var id = req.params.id ;
     try {
         const project = await Bugs.findOne({"alpha._id": id });
@@ -284,7 +288,7 @@ router.get('/getcommentsbyusers/:id', async(req, res) => {
 })
 
 // Editing The Comment Under Discussion Tab 
-router.patch('/editcommentsbyusers/:id', async(req, res) => {
+router.patch('/editcommentsbyusers/:id', auth,async(req, res) => {
     var id = req.params.id ;
     const {editComments} = req.body ;
 
@@ -319,7 +323,7 @@ router.patch('/editcommentsbyusers/:id', async(req, res) => {
 })
 
 // Deleting the Route for Discussion Comments
-router.delete('/deletecommentsbyusers/:id', async (req, res) => {
+router.delete('/deletecommentsbyusers/:id', auth,async (req, res) => {
     var id = req.params.id ;
     try {
         const update = await Bugs.findOne({"alpha.commentsByUsers._id" : id })
