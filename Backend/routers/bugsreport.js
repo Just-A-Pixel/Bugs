@@ -13,6 +13,29 @@ const auth = require('../middlewares/auth')
 const adminauth = require('../middlewares/admin-auth')
 
 // Router for Syncing Github Repo with Web App
+router.get('/syncrepo', auth,  async(req, res) => {
+    try {
+        const bugs = await Bugs.find({})
+        const user = 'CodeChefVIT';
+        // repo = repo.replace(/ /g, '-')
+        console.log(`https://api.github.com/orgs/${user}/repos?per_page=1000`)  
+        fetch(`https://api.github.com/orgs/${user}/repos?per_page=1000`, {
+            method: 'get', 
+            headers: {'Content-Type': 'application/json', 'Authorization': `token ${process.env.TOKEN}`}
+        })
+        .then( (res) => {
+            return res.json();
+        })
+        .then( (json) => {
+            // console.log(json);
+            json.forEach((element) => console.log(element.name))
+        })
+        res.json('Hello World.........')
+    }catch (e){
+        console.log(e);
+        res.json(e);
+    }    
+})
 
 // Router For Posting The Labels for CC Projects --> Specifically For CC Members 
 router.post('/addlabels', auth,adminauth ,async(req, res) => {
