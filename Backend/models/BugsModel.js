@@ -5,6 +5,7 @@ const bugsSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+    isPublic : {type: Boolean, default: false},
     alpha: [{
         title: {
             type: String,

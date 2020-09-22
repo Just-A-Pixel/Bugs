@@ -12,6 +12,8 @@ const fetch = require('node-fetch');
 const auth = require('../middlewares/auth')
 const adminauth = require('../middlewares/admin-auth')
 
+// Router for Syncing Github Repo with Web App
+
 // Router For Posting The Labels for CC Projects --> Specifically For CC Members 
 router.post('/addlabels', auth,adminauth ,async(req, res) => {
     var label = req.body.label 
