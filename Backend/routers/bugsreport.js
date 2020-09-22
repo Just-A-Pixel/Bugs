@@ -16,6 +16,7 @@ const adminauth = require('../middlewares/admin-auth')
 router.get('/syncrepo', auth,  async(req, res) => {
     try {
         const bugs = await Bugs.find({})
+        var projectarray = []
         const user = 'CodeChefVIT';
         // repo = repo.replace(/ /g, '-')
         console.log(`https://api.github.com/orgs/${user}/repos?per_page=1000`)  
@@ -28,9 +29,21 @@ router.get('/syncrepo', auth,  async(req, res) => {
         })
         .then( (json) => {
             // console.log(json);
-            json.forEach((element) => console.log(element.name))
+
+            bugs.forEach((bug) => {
+                // console.log(bug.project)`
+                projectarray.push(bug.project)
+            })
+
+            json.forEach(async (element) => {
+                // console.log(element.name)
+                if (!projectarray.includes(element.name)){
+                    const bugs = new Bugs({project: element.name})
+                    await bugs.save();
+                }
+            })
         })
-        res.json('Hello World.........')
+        res.json(bugs)
     }catch (e){
         console.log(e);
         res.json(e);
