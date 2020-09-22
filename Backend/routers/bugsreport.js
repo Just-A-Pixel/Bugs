@@ -12,6 +12,19 @@ const fetch = require('node-fetch');
 const auth = require('../middlewares/auth')
 const adminauth = require('../middlewares/admin-auth')
 
+// Router Allowing Admin To Change the Public Visibility of the Application
+router.patch('/changestatus', adminauth, async (req, res) => {
+    var {project,isPublic} = req.body;
+    try {
+        const bugs = await Bugs.updateOne({project},{$set: {"isPublic": isPublic}})
+        console.log(bugs)
+        res.json(await Bugs.findOne({project}))
+    } catch (e) {
+        console.log(e);
+        res.json(e);
+    }
+})
+
 // Router for Syncing Github Repo with Web App
 router.get('/syncrepo', auth,  async(req, res) => {
     try {
