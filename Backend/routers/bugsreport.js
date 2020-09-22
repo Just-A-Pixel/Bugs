@@ -127,7 +127,7 @@ router.post('/reportbug', auth,async (req, res) => {
         }
 
         var gitIssue = [];
-        var gitTemplate = {title, body: description, labels: [gitLabels]}
+        var gitTemplate = {title, body: description}
         gitIssue.push((gitTemplate))
         console.log(gitTemplate)
         
@@ -190,15 +190,45 @@ router.patch('/updatebug/:id', auth,async (req, res) => {
 // Deletion By User 
 router.delete('/deletebug/:id', auth,async(req, res) => {
     var id = req.params.id 
+    var issuenumber = 0 ;
     try {
         const bug = await Bugs.findOne({ "alpha._id": id})
         if (bug){
             const ans = await bug.alpha
-            var filtered = ans.filter(function(value, index, arr){ return (value._id != id)})
-            bug.alpha = filtered 
-            await bug.save()
-            res.json(bug.alpha) 
-            console.log(filtered)
+            var filtered = ans.filter(async function(value, index, arr){ 
+                if (value._id == id){
+                    const user = 'CodeChefVIT';
+                    var repo = bug.project;
+                    repo = repo.replace(/ /g, '-')
+                    console.log(`https://api.github.com/repos/${user}/${repo}/issues`) 
+                    fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
+                        method: 'get',
+                        headers: {"Authorization": `token ${process.env.TOKEN}`}
+                    })
+                    .then( (res) => {
+                        return res.json();
+                    })
+                    .then( (json) => {
+                        // console.log(json)
+                        json.forEach((element) => {
+                            console.log(element.number + element.title)
+                            if (element.title == value.title){
+                                issuenumber = element.number
+                                checktemp = {'state':'closed'}
+                                fetch(`https://api.github.com/repos/${user}/${repo}/issues/${issuenumber}`,{method: 'patch', body: JSON.stringify(checktemp),headers: {"Authorization": `token ${process.env.TOKEN}` }})
+                                .then( (res1) => { return res1.json() })
+                                .then( (json1) => { console.log(json1)})
+                            }
+                        })
+                        // console.log(value)
+                    })
+                }
+                return (value._id != id)})
+                bug.alpha = filtered
+                // console.log(issuenumber)  
+                // await bug.save()
+                res.json(bug.alpha) 
+                // console.log(filtered)
         }else {
             res.json("Not Found")
         }  
@@ -207,6 +237,29 @@ router.delete('/deletebug/:id', auth,async(req, res) => {
         res.json(err)
     }
 })
+
+
+/*
+*
+
+                    // console.log(value)
+                    const user = 'CodeChefVIT';
+                    var repo = bug.project;
+                    repo = repo.replace(/ /g, '-')
+                    console.log(`https://api.github.com/repos/${user}/${repo}/issues`)
+                    const ji = fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {method: 'get', headers: {'Content-Type': 'application/json', 'Authorization': `token ${process.env.TOKEN}`}}).then((res) => {res.json()}).then((soe) => console.log('Hello World'))
+                    //     gitIssue.forEach(issue => {
+                //         fetch(`https://api.github.com/repos/${user}/${repo}/issues`, {
+                //         method: 'get',
+                //         headers: {'Content-Type': 'application/json', 'Authorization': `token ${process.env.TOKEN}`}
+                //     })
+                //     .then(res =>  res.json())
+                //     .then(json => {
+                //         console.log(`Issue created at ${json.url}`)
+                //     })
+                // })
+                    console.log(ji) */
+
 
 // Posting Comments by CC Authorities 
 router.patch('/postcomment/:id', adminauth,async (req, res) => {
