@@ -226,7 +226,7 @@ router.delete('/deletebug/:id', auth,async(req, res) => {
                 return (value._id != id)})
                 bug.alpha = filtered
                 // console.log(issuenumber)  
-                // await bug.save()
+                await bug.save()
                 res.json(bug.alpha) 
                 // console.log(filtered)
         }else {
