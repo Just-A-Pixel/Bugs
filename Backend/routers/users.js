@@ -2,13 +2,19 @@
 
 const express = require('express')
 const router = express.Router();
-const User = require('../models/User')
+const User = require('../models/User-Google')
 const validator = require('validator')
 const Codechef = require('../models/Codechef-Members')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
 const { forwardAuthenticated } = require('../config/auth');
 require('../config/passport')
+
+// Temp Route 
+router.get('/getallusers', async (req, res) => {
+    const user = await User.find({})
+    res.send(user);
+})
 
 // Register 
 router.get('/register', (req, res) => {
