@@ -20,9 +20,20 @@ router.get('/auth/google/redirect', passport.authenticate('google'), async (req,
       const update = await User.updateOne({googleId: user.googleId}, {$set: {isCodechef: true} })
       console.log(update)
       console.log(codechef)
-      res.send(await User.findOne({googleId: user.googleId})) 
+      console.log(req.user)
+	console.log(req.user)
+       const {token,  _id} = req.user 
+       //res.send(await User.findOne({googleId: user.googleId})) 
+     res.redirect(
+        303,
+        "http://127.0.0.1:5500/CODECHEF%20bug%20site/bugs-all.html/?token=" + token + "&_id=" + _id
+      );
     } else {
-      res.send("Not Found ")
+	//res.send(await User.findOne({googleId: user.googleId}))
+      res.redirect(
+        303,
+        "http://127.0.0.1:5500/CODECHEF%20bug%20site/bugs-all.html/?token=" + token+ "&_id=" + _id
+     );
     }
  
 });    
