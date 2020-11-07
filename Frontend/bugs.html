@@ -28,8 +28,25 @@
 </head>
 
 
-<body><h6 class="logout" onclick="logout()">Logout</h6>
-    <div class="container-fluid header" id = "main-head" style="background-image: url('assets/css/img/header.svg');">
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar  navbar-expand navbar-dark">
+        <a href="" class="navbar-brand">CodechefVIT</a>         
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="btn signup" href="#contact">Contact Us</a>
+                <hr class="navline">
+            </li>
+            <li class="nav-item" style="margin-right: 50px;" onclick="logout()"><a class="btn signup" href="#">Log Out</a>
+                <hr class="navline">
+            </li>
+        </ul>
+    </nav>
+
+
+    <!-- <h6 class="logout "  style="width: 100%;">Logout</h6> -->
+    <div class="container-fluid header" id = "main-head" >
         <div class="text-center">
             <br><br>
             <h1 class="header-head">What's bugging you today?</h1><br>
@@ -49,6 +66,7 @@
         </div>
         
     </div>
+    <hr>
     <div class="row">
         
         <div class="col-sm-3 col-md-2" id = "left-column">
@@ -57,61 +75,93 @@
             <br><br>
             <form id="left-side" style="display: none;">
                 <input type="text" id="project-input">
-                <div class="btn" onclick="submitProject()">submit</button></div>
+                <div class="btn submit-project" onclick="submitProject()">Submit</button></div>
             </form>
 
-            <ul class="project-list" id="test"></ul>
+            <ul class="project-list" id="test">
+                <!-- <a href="#issue-list"><li class="project-element"  onclick="select(this)" onmouseover="addAnimate(this)" onmouseout="removeAnimate(this)">FFCC</li></a><br>
+                <a href="#issue-list"><li class="project-element"  onclick="select(this)" onmouseover="addAnimate(this)" onmouseout="removeAnimate(this)">FFCC</li></a><br>
+                <a href="#issue-list"><li class="project-element"  onclick="select(this)" onmouseover="addAnimate(this)" onmouseout="removeAnimate(this)">FFCC</li></a><br>
+                <a href="#issue-list"><li class="project-element"  onclick="select(this)" onmouseover="addAnimate(this)" onmouseout="removeAnimate(this)">FFCC</li></a><br> -->
+            </ul>
         </div>
 
         <div class="col-sm-8 main-area">
             <br>            
-            <div id="issue-list"></div>
+                <div id="issue-list">
+                    
+
+
+                    <!-- <div class="container tweet">
+                        <p class="title">
+                            <img src="assets/css/img/bug.svg" class="bug">
+                            <div class="btn remove-tweet" onclick="removeBug(this)">X</div>
+                            <span class = "tweet-name">Raj Anand</span><br>
+                            <span class = "tweet-project">Found a bug in: FFDS</span> 
+                        </p>
+                        
+                        <hr>
+                        <h4 class="tweet-title">Lagging apk</h4>
+                        <p class="tweet-description">Potatoes, potatoes, potatoes everywhere</p>
+                        <img src="assets/css/img/chat.svg" style="width: 20px;">
+                        <a href=#>Comments</a>
+                         <br><br>
+                        <div class="comment-box ">
+                            <div class=" container text-center input" >
+                                <input type="text" class = "add-comment" name="" id="comment-input"> 
+                                <button class="btn btn-primary submit-comment"  onclick="addComment(this)">Comment</button>
+                            </div>
+                            
+                            <p class="container comment-title">
+                                <img src="assets/css/img/Ellipse 11.svg" class="bug2">
+                                <span class = "comment-name">Raj Anand</span><br>
+                                <span class = "comment">Found a bug in: FFDS</span> 
+                            </p>
+                            <hr>
+                            <p class="container comment-title">
+                                <img src="assets/css/img/Ellipse 11.svg" class="bug2">
+                                <span class = "comment-name">Raj Anand</span><br>
+                                <span class = "comment">Found a bug in: FFDS</span> 
+                            </p>
+                        </div>                
+                        <h6 class = "tweet-id "onselectstart="return false">data[i].alpha[j]._id</h6>
+                    </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="container-fluid text-center footer">
-        <br>bugs.codechefvit.com <br><br>
-        <p style="font-size: 20px; color: rgb(172, 172, 172);">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at justo lacinia, accumsan lorem id, auctor erat. <br> Nunc iaculis pellentesque sem a vehicula.</p>
+    <hr>
+    <div class="container-fluid text-center footer" id = "contact">
+        <!-- Contact <br> --><br>
+        <div class="icons">
+            <i class="social-icon fa fa-facebook-f"></i>
+            <i class="social-icon fa fa-twitter"></i>
+            <i class="social-icon fa fa-instagram"></i>
+            <i class="social-icon fa fa-envelope"></i>
+        </div>
+        <p style="font-size: 20px; color: rgb(172, 172, 172);"><p style="font-size: 20px; color: rgb(172, 172, 172);">Feel free to bug us. Anytime.</p>
+       
+        
     </div>
+    <script src="https://use.fontawesome.com/630e118e72.js"></script>
 </body>
 <script src="assets/js/script.js"></script>
 </html>
 
 
 
-   <!-- <div class="container tweet">
-                <p class="title">
-                    <img src="assets/css/img/bug.svg" class="bug">
-                    <div class="btn remove-tweet" onclick="removeBug(this)">X</div>
-                    <span class = "tweet-name">Raj Anand</span><br>
-                    <span class = "tweet-project">Found a bug in: FFDS</span> 
-                </p>
-                
-                <hr>
-                <h4 class="tweet-title">Lagging apk</h4>
-                <p class="tweet-description">Potatoes, potatoes, potatoes everywhere</p>
-                <img src="assets/css/img/chat.svg" style="width: 20px;">
-                <a href=#>Comments</a>
-                 <br><br>
-                <div class="comment-box ">
-                    <div class=" container text-center input" >
-                        <input type="text" class = "add-comment" name="" id="comment-input"> 
-                        <button class="btn btn-primary submit-comment"  onclick="addComment(this)">Comment</button>
-                    </div>
-                    <hr>
-                    <p class="container comment-title">
-                        <img src="assets/css/img/Ellipse 11.svg" class="bug2">
-                        <span class = "comment-name">Raj Anand</span><br>
-                        <span class = "comment">Found a bug in: FFDS</span> 
-                    </p>
-                    <hr>
-                    <p class="container comment-title">
-                        <img src="assets/css/img/Ellipse 11.svg" class="bug2">
-                        <span class = "comment-name">Raj Anand</span><br>
-                        <span class = "comment">Found a bug in: FFDS</span> 
-                    </p>
-                </div>                
-                <h6 class = "tweet-id "onselectstart="return false">data[i].alpha[j]._id</h6>
-            </div> -->
+  
             
