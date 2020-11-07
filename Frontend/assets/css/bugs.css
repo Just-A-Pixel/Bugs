@@ -1,10 +1,72 @@
+html,body {overflow-x: hidden;}
+
+hr {
+    width: 20%;
+    border-width: 3px;
+    border-radius: 50px;
+    border-color: #cacaca4d;
+}
+
+hr.underline {
+    width: 140px;
+    position: relative;
+    bottom: 8px;
+    background-image: linear-gradient(90deg,rgb(228, 101, 233), rgb(116, 184, 240));
+    border: none;
+    height: 5px;
+    border-radius: 50px;
+}
+
+hr.navline {
+    width: 0px;
+    position: relative;
+    bottom: 20px;
+    right: 3px;
+    background-color: rgb(201, 71, 149);
+    border: none;
+    height: 2px;
+    border-radius: 50px;
+    transition: 300ms;
+}
+
+.signup {
+    background-color: none;
+    color: rgb(216, 216, 216);
+    font-size: 20px;
+    border-style: none;
+    padding: 10px 15px;
+    margin-right: 10px;
+    transition: 300ms;
+}
+
+.signup:hover {
+    font-size: 20px;
+    color: rgb(201, 71, 149);
+    transition: 300ms;
+}
+
+.signup:hover+hr.navline {
+    width: 80px;
+    transition: 300ms;
+}
+
+body {
+    background-color: #ffffff;
+    background-image: url("img/login\ background.svg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: top right;
+    background-size: cover;
+  }
 .logout {
-    text-align: end;
-    margin: 10px, 20px;
+    text-align: right;
+    padding-right: 15px;
+    padding-top: 5px;
+    /* margin: 10px, 20px; */
     background: none;
-    position: absolute;
-    left: 20px;
-    top: 10px;
+    /* position: absolute; */
+    /* left: 20px;
+    top: 10px; */
     color: rgb(216, 216, 216);
     cursor: pointer;
 }
@@ -20,7 +82,7 @@ input {
 .header {
     height: 200px;
     background-repeat: no-repeat;
-    background-color: #1f1f1f;
+    
 }
 
 @media only screen and (max-width: 527px) {
@@ -29,7 +91,8 @@ input {
     }
 }
 .header-head {
-    color: whitesmoke;
+    color: rgb(58, 57, 58);
+    font-weight: 300;
 }
 
 #project, #title, #description, #issuedby {
@@ -84,6 +147,34 @@ input {
     /* transition: 1000ms; */
 }
 
+#left-side {
+    margin-left: 15px;
+    align-items: center;
+}
+
+#project-input{
+    border: solid;
+    border-width: 1px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 200px;
+}
+
+.submit-project {
+    border: solid;
+    border-color: rgba(97, 97, 97, 0);
+    border-width: 1px;
+    margin-top: 10px;
+    padding: 5px 15px;
+    border-radius: 15px;
+    background-color: rgb(201, 222, 235);
+
+}
+
+.submit-project:hover {
+    background-color: rgb(189, 188, 188);
+}
+
 .selected {
     box-shadow: none;
     background-color: rgb(203, 252, 252);
@@ -95,27 +186,29 @@ input {
 }
 
 .main-area {
-    background-color: whitesmoke;
+    /* background-color: rgba(223, 223, 223, 0); */
 }
 
 .tweet {
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(236, 235, 235, 0.199);
     max-width: 800px;
+    border-radius: 10px;
 }
 
 .remove-tweet {
     color: rgb(168, 168, 168);
-    border-radius: 0;
+    border-radius: 50%;
     transition: 250ms;
     padding: 5px 13px;
     float: right;
     margin-top: 7px;
+    background-color: rgba(189, 188, 188, 0.582);
 }
 
 .remove-tweet:hover {
-    background-color: rgba(172, 172, 172, 0);
-    color: tomato;
-    font-size: 25px;
+    background-color: rgba(255, 77, 77, 0.89);
+    color: rgb(245, 244, 244);
+    /* font-size: 25px; */
     transition: 100ms;
     /* border-bottom: solid 2px; */
 
@@ -170,10 +263,12 @@ input {
 }
 
 .comment-box {
-    background-color: #f0f0f0;
+    /* background-color: #e6e6e6d7; */
+    /* background-image: linear-gradient(180deg, rgba(146, 145, 145, 0), rgba(255, 255, 255, 0)); */
     padding-top: 5px;
     padding-bottom: 5px;
     margin-top: 10px;
+    border-radius: 5px;
 }
 
 .input {
@@ -181,23 +276,37 @@ input {
 }
 
 .add-comment {
-   border: none;
+   border: solid;
    width: 450px;
    border-radius: 15px;
+   border-width: 1px;
+   border-color: rgb(201, 200, 200);
+   padding-left: 10px;
+   padding-bottom: 3px;
+   color: rgba(39, 39, 39, 0.849);
 }
 .submit-comment {
-    border-radius: 15px;
+    border-radius: 11px;
     height: 27px;
     padding: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
     font-size: 10px;
     position: relative;
     bottom: 2px;
-    background-color: rgb(109, 155, 255) ;
+    background-color: rgba(113, 114, 114, 0.589) ;
     border-width: 0;
+}
+
+.submit-comment:hover {
+    background-color: rgba(113, 114, 114, 0.973)
 }
 
 .comment-title {
     padding: 2px 15px 2px 15px;
+    border-left: solid;
+    border-color: rgba(187, 187, 187, 0.363);
+    border-width: 2px;
 }
 
 .bug2 {
@@ -215,6 +324,16 @@ input {
         width: 320px;
     }
 }
+@media only screen and (max-width: 671px) {
+    .add-comment {
+        width: 255px;
+    }
+}
+@media only screen and (max-width: 575px) {
+    .add-comment {
+        width: 320px;
+    }
+}
 
 .comment {
 font-style: normal;
@@ -226,8 +345,8 @@ line-height: 35px;
 /* footer */
 
 .footer {
-    background-color: black;
-    color: whitesmoke;
+    background-color: none;
+    color: rgb(37, 37, 37);
     padding: 30px;
     font-size: 40px;
 }
