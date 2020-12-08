@@ -316,6 +316,7 @@ function showComment(x) {
 function logout() {
     $.get('https://codechefvitbugs.herokuapp.com/users/logout', function(data, status){
         console.log("Logged out")
+        localStorage.removeItem("token");
         window.location.replace("http://127.0.0.1:5500/CODECHEF%20bug%20site/login.html");
     });
 }
