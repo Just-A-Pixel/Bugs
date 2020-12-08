@@ -3,19 +3,36 @@
 // $.get("https://codechefvitbugs.herokuapp.com/users/getallusers". function(data) {
     
 // })
-console.log(window.location.href)
-
+// console.log(window.location.href)
+console.log('Helo worl' + localStorage.getItem("token"))
 //var string = "http://127.0.0.1:5500/CODECHEF%20bug%20site/bugs-all.html/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjBkZGQ4YjhmYzc5NTAwMTc1NGI4NjEiLCJuYW1lIjoiUkFKIEFOQU5EIDE5QkNFMDE2NSIsImVtYWlsIjoicmFqLmFuYW5kMjAxOUB2aXRzdHVkZW50LmFjLmluIiwiaWF0IjoxNTk5MzI3NjQ3LCJleHAiOjE1OTk0MTQwNDd9.4nFGcP2d3MULvKr5vdVJuMEhZOAOnsgHgOj7aEbXj5c&_id=5f0ddd8b8fc795001754b861"
-var string = window.location.href
-string = string.split("?")
-string = string[1].split("&")
-string = string[0].split("=")
-token = string[1]
-console.log(token)
+
+// console.log(token)
+// let token;
+
+// var string = window.location.href
+//     string = string.split("?")
+//     string = string[1].split("&")
+//     string = string[0].split("=")
+//     token = string[1]
+console.log("Hello world")
+
+if(localStorage.getItem("token") == null) {
+
+    var string = window.location.href
+    string = string.split("?")
+    string = string[1].split("&")
+    string = string[0].split("=")
+    token = string[1]
+
+    localStorage.setItem("token", token);
+} else {
+    token = localStorage.getItem("token");
+}
 
 
 
-var test_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjBkZGQ4YjhmYzc5NTAwMTc1NGI4NjEiLCJuYW1lIjoiUkFKIEFOQU5EIDE5QkNFMDE2NSIsImVtYWlsIjoicmFqLmFuYW5kMjAxOUB2aXRzdHVkZW50LmFjLmluIiwiaWF0IjoxNTk5MzE0NDY5LCJleHAiOjE1OTk0MDA4Njl9.pCuE6swzF68vgu0d-s2oeQ_TBf8ac8WFXxaOwsNZx2E'
+//var test_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjBkZGQ4YjhmYzc5NTAwMTc1NGI4NjEiLCJuYW1lIjoiUkFKIEFOQU5EIDE5QkNFMDE2NSIsImVtYWlsIjoicmFqLmFuYW5kMjAxOUB2aXRzdHVkZW50LmFjLmluIiwiaWF0IjoxNTk5MzE0NDY5LCJleHAiOjE1OTk0MDA4Njl9.pCuE6swzF68vgu0d-s2oeQ_TBf8ac8WFXxaOwsNZx2E'
 test_token = token
 $.ajax({
     url: 'https://codechefvitbugs.herokuapp.com/report/bug/all',
@@ -89,7 +106,7 @@ function select(x) {
                     document.getElementById("issue-list").innerHTML += '<div class="container tweet">'+
                                                                             '<p class="title">'+
                                                                                 '<img src="assets/css/img/bug.svg" class="bug">'+
-                                                                                //'<div class="btn remove-tweet" onclick="removeBug(this)">X</div>'+
+                                                                                '<div class="btn remove-tweet" onclick="removeBug(this)">X</div>'+
                                                                                 '<span class = "tweet-name">'+data[i].alpha[j].issuedby+'</span><br>'+
                                                                                 '<span class = "tweet-project">Found a bug in: '+data[i].project+'</span>'+
                                                                             '</p>'+
@@ -102,7 +119,7 @@ function select(x) {
                                                                                 '</div>'+
                                                                                  commentString +
                                                                             '</div>'+
-                                                                            '<h6 class = "tweet-id "onselectstart="return false">'+data[i].alpha[j]._id+'</h6>'+
+                                                                            '<h6 class = "tweet-id" onselectstart="return false">'+data[i].alpha[j]._id+'</h6>'+
                                                                         '</div>'
                     console.log(data[i].alpha[j].commentsByUsers)
                     }
@@ -299,19 +316,6 @@ function showComment(x) {
 function logout() {
     $.get('https://codechefvitbugs.herokuapp.com/users/logout', function(data, status){
         console.log("Logged out")
+        window.location.replace("http://127.0.0.1:5500/CODECHEF%20bug%20site/login.html");
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//"http://127.0.0.1:5500/CODECHEF%20bug%20site/bugs-all.html/?name=RAJ%20ANAND%2019BCE0165&   token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjBkZGQ4YjhmYzc5NTAwMTc1NGI4NjEiLCJuYW1lIjoiUkFKIEFOQU5EIDE5QkNFMDE2NSIsImVtYWlsIjoicmFqLmFuYW5kMjAxOUB2aXRzdHVkZW50LmFjLmluIiwiaWF0IjoxNTk4ODkxNzExLCJleHAiOjE1OTg5NzgxMTF9.jJtgC0Xw_Pwqbk5wOhlwaWb5-1bR9JiEhaA085MyrJM    &email=raj.anand2019@vitstudent.ac.in&googleId=104528509705348404316&_id=5f0ddd8b8fc795001754b861"
